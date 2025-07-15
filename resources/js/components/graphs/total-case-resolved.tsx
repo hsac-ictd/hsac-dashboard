@@ -1,4 +1,4 @@
-import { Book } from "lucide-react"
+import { Book } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -6,9 +6,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
-export function TResolvedCards() {
+interface TResolvedCardsProps {
+  totalRabCasesResolved: number;
+}
+
+export function TResolvedCards({ totalRabCasesResolved }: TResolvedCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card
@@ -30,7 +34,7 @@ export function TResolvedCards() {
               Total RAB Cases Resolved
             </CardDescription>
             <CardTitle className="text-4xl font-bold tabular-nums text-center text-white drop-shadow-lg @[250px]/card:text-3xl">
-              150
+              {totalRabCasesResolved.toLocaleString()}
             </CardTitle>
           </div>
 
@@ -38,5 +42,5 @@ export function TResolvedCards() {
         </CardHeader>
       </Card>
     </div>
-  )
+  );
 }

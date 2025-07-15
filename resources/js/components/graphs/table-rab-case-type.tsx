@@ -16,41 +16,48 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const data = [
-  { name: "REM", newCasesFiled: 12, disposed: 7 },
-  { name: "HOA", newCasesFiled: 8, disposed: 9 },
-]
+export function RabCaseTypeChart({
+  data,
+}: {
+  data: Array<{
+    name: string;
+    newCasesFiled: number;
+    disposed: number;
+  }>;
+}) {
+  const totalNewCasesFiled = data.reduce((acc, cur) => acc + cur.newCasesFiled, 0);
+  const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0);
 
-const orange = "#fe9a00"
-const yellow = "#ffd230"
+  const orange = " rgba(44,154,147,0.9)";
+  const yellow = "#eecb4cff";
 
-const chartConfig = {
-  newCasesFiled: {
-    label: "New Cases Filed",
-    color: orange,
-  },
-  disposed: {
-    label: "Disposed",
-    color: yellow,
-  },
-} satisfies ChartConfig
+  const chartConfig = {
+    newCasesFiled: {
+      label: "Cases Filed",
+      color: orange,
+    },
+    disposed: {
+      label: "Disposed",
+      color: yellow,
+    },
+  } satisfies ChartConfig;
 
-export function RabCaseTypeChart() {
-  const totalNewCasesFiled = data.reduce((acc, cur) => acc + cur.newCasesFiled, 0)
-  const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0)
+  const currentYear = new Date().getFullYear();
 
   return (
-        <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-80">
-          
+    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-80">
       <CardHeader>
         <CardTitle>RAB CASE TYPE</CardTitle>
-        <CardDescription>Recent case filing and disposition data</CardDescription>
+        <CardDescription>{currentYear} - Present</CardDescription>
       </CardHeader>
       <CardContent>
-        {/* Totals above chart */}
         <div className="mb-4 flex gap-6 text-sm font-semibold">
-          <div style={{ color: orange }}>Total New Cases Filed: {totalNewCasesFiled}</div>
-          <div style={{ color: yellow }}>Total Disposed: {totalDisposed}</div>
+          <div style={{ color: orange }}>
+            Total Cases Filed: {totalNewCasesFiled}
+          </div>
+          <div style={{ color: yellow }}>
+            Total Disposed: {totalDisposed}
+          </div>
         </div>
 
         <ChartContainer config={chartConfig}>
@@ -89,5 +96,5 @@ export function RabCaseTypeChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

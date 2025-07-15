@@ -8,7 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export function TAppealedCasesFiledCard() {
+interface TAppealedCasesFiledCardProps {
+  data: number;
+}
+
+export function TAppealedCasesFiledCard({ data }: TAppealedCasesFiledCardProps) {
   return (
     <div className="grid grid-cols-1 gap-4 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card
@@ -19,18 +23,16 @@ export function TAppealedCasesFiledCard() {
         }}
       >
         <CardHeader className="flex items-center gap-4">
-          {/* Left-side connected icon */}
           <div className="flex-shrink-0 rounded-full bg-[#6a7fbf]/80 p-4 flex items-center justify-center">
             <IconTrendingUp className="text-[#4d5690] w-10 h-10" />
           </div>
 
-          {/* Text content */}
           <div className="flex-1">
             <CardDescription className="text-[#3c4063] font-semibold drop-shadow-md">
               Total Appealed Cases Filed
             </CardDescription>
             <CardTitle className="text-4xl font-bold tabular-nums text-center text-white drop-shadow-lg @[250px]/card:text-3xl">
-              2,000
+              {data.toLocaleString()}
             </CardTitle>
           </div>
 

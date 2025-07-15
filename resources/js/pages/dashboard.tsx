@@ -14,11 +14,87 @@ import { CourtAffirmanceRatePie } from "@/components/graphs/court-affirmance-rat
 import { AppealCaseTypeChart } from "@/components/graphs/table-appeal-case-type";
 
 import { NCasesDisposedYearly } from "@/components/graphs/cases-disposed-yearly-graph";
+import { NAppealCasesDisposedYearly } from "@/components/graphs/cases-appeal-disposed-graph";
+
 import PrexcTargetsTable from "@/components/graphs/prexc-table";
 
 import Waves from "@/components/background/Particles";
 
-export default function Dashboard() {
+interface DashboardProps {
+  prexcIndicators: Array<{
+    id: number;
+    indicator: string;
+    target: number;
+    accomplishment: number;
+    percentage_of_accomplishment: number;
+    year: number;
+  }>;
+  appealsAffirmance: {
+    data: Array<{
+      outcome: string;
+      total: number;
+    }>;
+    month: string | null;
+  };
+  courtAffirmanceData: Array<{
+    outcome: string;
+    total: number;
+  }>;
+  courtAffirmanceMonth: string | null;
+
+  rabCasesData: Array<{
+    region: string;
+    value: number;
+  }>;
+
+  rabCaseTypeData: Array<{
+    name: string;
+    newCasesFiled: number;
+    disposed: number;
+  }>;
+
+  appealCaseTypeData: Array<{
+    name: string;
+    newCasesFiled: number;
+    disposed: number;
+  }>;
+
+  yearlyDisposedCases: Array<{ 
+    year: string; 
+    disposed: number;
+  }>;
+
+  yearlyAppealDisposedCases: Array<{ 
+    year: string; 
+    disposed: number;
+  }>;
+
+  totalRabCasesFiled: number; 
+  totalRabCasesResolved: number;
+  totalAppealCasesResolved: number;
+  totalAppealCasesFiled: number;
+  totalIndigentLitigants: number;
+  totalCertificatesSubmitted: number;
+}
+
+export default function Dashboard({
+  prexcIndicators,
+  appealsAffirmance,
+  courtAffirmanceData,
+  courtAffirmanceMonth,
+  rabCasesData,
+  rabCaseTypeData,
+  appealCaseTypeData,
+  yearlyDisposedCases,
+  yearlyAppealDisposedCases,
+  totalRabCasesFiled,
+  totalRabCasesResolved,
+  totalAppealCasesResolved,
+  totalAppealCasesFiled,
+  totalIndigentLitigants,
+  totalCertificatesSubmitted,
+}: DashboardProps) {
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
       <Head title="Dashboard" />
@@ -43,42 +119,47 @@ export default function Dashboard() {
         className="relative z-10 p-4 space-y-2 bg-transparent text-white min-h-screen max-w-screen-xl mx-auto"
         style={{ maxWidth: "1920px", minHeight: "1080px" }}
       >
-        {/* <h1 className="text-2xl font-bold">Dashboard</h1> */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:auto-rows-min relative">
           {/* First Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <SectionCards />
+             <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <TResolvedCards />
+            <TResolvedCards totalRabCasesResolved={totalRabCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <ChartBarHorizontal />
+            <ChartBarHorizontal data={rabCasesData} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <RabCaseTypeChart />
+            <RabCaseTypeChart data={rabCaseTypeData} />
           </div>
 
           {/* Second Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <TAppealedCasesResolvedCard />
+            <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <IndigentLitigantsCard />
+           <IndigentLitigantsCard data={totalIndigentLitigants} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <AppealsAffirmanceRatePie />
+            <AppealsAffirmanceRatePie
+              data={appealsAffirmance.data}
+              month={appealsAffirmance.month}
+            />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <AppealCaseTypeChart />
+            <AppealCaseTypeChart data={appealCaseTypeData} />
           </div>
 
           {/* Third Column */}
           <div className="relative">
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <TAppealedCasesFiledCard />
+            <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <CertificateIndigentCard />
+            <CertificateIndigentCard data={totalCertificatesSubmitted} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <CourtAffirmanceRatePie />
+            <CourtAffirmanceRatePie
+              data={courtAffirmanceData}
+              month={courtAffirmanceMonth}
+            />
 
-            {/* PrexcTargetsTable container expanded to visually cover columns 3 and 4 */}
+            {/* Prexc Targets Table */}
             <div
               className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-80"
               style={{
@@ -90,14 +171,16 @@ export default function Dashboard() {
               }}
             >
               <h2 className="text-xl font-semibold mb-2"></h2>
-              <PrexcTargetsTable />
+              <PrexcTargetsTable data={prexcIndicators} />
             </div>
           </div>
 
           {/* Fourth Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <NCasesDisposedYearly />
+            <NCasesDisposedYearly data={yearlyDisposedCases} />
+            <h2 className="text-xl font-semibold mb-2"></h2>
+            <NAppealCasesDisposedYearly data={yearlyAppealDisposedCases} />
           </div>
         </div>
       </div>

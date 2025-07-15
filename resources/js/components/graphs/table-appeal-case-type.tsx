@@ -16,18 +16,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const data = [
-  { name: "REM", newCases: 12, disposed: 7 },
-  { name: "HOA", newCases: 8, disposed: 9 },
-  { name: "TPZ", newCases: 15, disposed: 11 },
-]
-
-const orange = "#fe9a00"
-const yellow = "#ffd230"
+const orange = "rgba(230, 125, 170, 0.9)";
+const yellow = "rgba(73, 150, 238, 0.9)";
 
 const chartConfig = {
-  newCases: {
-    label: "New Cases Filed",
+  newCasesFiled: {
+    label: "Cases Filed",
     color: orange,
   },
   disposed: {
@@ -36,23 +30,34 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function AppealCaseTypeChart() {
-  const totalNewCases = data.reduce((acc, cur) => acc + cur.newCases, 0)
+interface AppealCaseTypeChartProps {
+  data: Array<{
+    name: string
+    newCasesFiled: number
+    disposed: number
+  }>
+}
+
+export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
+  const totalNewCases = data.reduce((acc, cur) => acc + cur.newCasesFiled, 0)
   const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0)
+  const currentYear = new Date().getFullYear()
 
   return (
-      <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-80">
-
-    
+    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-80">
       <CardHeader>
         <CardTitle>APPEAL CASE TYPE</CardTitle>
-        <CardDescription>Latest case filing and disposition data</CardDescription>
+        <CardDescription>{currentYear} - Present</CardDescription>
       </CardHeader>
+
       <CardContent>
-        {/* Total stats above chart */}
         <div className="mb-4 flex gap-6 text-sm font-semibold">
-          <div style={{ color: orange }}>Total New Cases Filed: {totalNewCases}</div>
-          <div style={{ color: yellow }}>Total Disposed: {totalDisposed}</div>
+          <div style={{ color: orange }}>
+            Total Cases Filed: {totalNewCases}
+          </div>
+          <div style={{ color: yellow }}>
+            Total Disposed: {totalDisposed}
+          </div>
         </div>
 
         <ChartContainer config={chartConfig}>
@@ -71,16 +76,14 @@ export function AppealCaseTypeChart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-
-            <Bar dataKey="newCases" fill={orange} radius={4}>
+            <Bar dataKey="newCasesFiled" fill={orange} radius={4}>
               <LabelList
-                dataKey="newCases"
+                dataKey="newCasesFiled"
                 position="bottom"
                 offset={10}
                 style={{ fill: orange, fontWeight: 600, fontSize: 12 }}
               />
             </Bar>
-
             <Bar dataKey="disposed" fill={yellow} radius={4}>
               <LabelList
                 dataKey="disposed"

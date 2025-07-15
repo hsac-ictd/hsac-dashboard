@@ -1,3 +1,4 @@
+import React from "react"
 import {
   Table,
   TableBody,
@@ -8,7 +9,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export default function PrexcTargetsTable() {
+interface IndicatorData {
+  id: number
+  indicator: string
+  target: number
+  accomplishment: number
+  percentage_of_accomplishment: number
+  year: number
+}
+
+interface PrexcTargetsTableProps {
+  data: IndicatorData[]
+}
+
+export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
+  // You can keep your row colors or generate dynamically if you want to cycle
   const rowColors = [
     "bg-yellow-100 border-yellow-300 text-gray-900",
     "bg-yellow-200 border-yellow-400 text-gray-900",
@@ -17,13 +32,9 @@ export default function PrexcTargetsTable() {
     "bg-yellow-500 border-yellow-700 text-gray-900",
   ]
 
-  const data = [
-    { indicator: "Indicator 1", target: 100, accomplishment: 90, percent: "90%" },
-    { indicator: "Indicator 2", target: 150, accomplishment: 120, percent: "80%" },
-    { indicator: "Indicator 3", target: 200, accomplishment: 180, percent: "90%" },
-    { indicator: "Indicator 4", target: 120, accomplishment: 100, percent: "83%" },
-    { indicator: "Indicator 5", target: 180, accomplishment: 160, percent: "89%" },
-  ]
+  if (!data.length) {
+    return <div className="text-gray-700 dark:text-gray-300">No data available</div>
+  }
 
   return (
     <div className="w-full opacity-90 dark:opacity-80">
@@ -55,21 +66,15 @@ export default function PrexcTargetsTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map(({ indicator, target, accomplishment, percent }, i) => (
+          {data.map(({ id, indicator, target, accomplishment, percentage_of_accomplishment }, i) => (
             <TableRow
-              key={indicator}
-              className={`hover:bg-yellow-300 border-b ${rowColors[i]} `}
+              key={id}
+              className={`hover:bg-yellow-300 border-b ${rowColors[i % rowColors.length]}`}
             >
-              <TableCell className="px-2 py-3 border-r text-gray-900">
-                {indicator}
-              </TableCell>
-              <TableCell className="px-2 py-3 border-r text-right text-gray-900">
-                {target}
-              </TableCell>
-              <TableCell className="px-2 py-3 border-r text-right text-gray-900">
-                {accomplishment}
-              </TableCell>
-              <TableCell className="px-2 py-3 text-right text-gray-900">{percent}</TableCell>
+              <TableCell className="px-2 py-3 border-r text-gray-900">{indicator}</TableCell>
+              <TableCell className="px-2 py-3 border-r text-right text-gray-900">{target}</TableCell>
+              <TableCell className="px-2 py-3 border-r text-right text-gray-900">{accomplishment}</TableCell>
+              <TableCell className="px-2 py-3 text-right text-gray-900">{percentage_of_accomplishment}%</TableCell>
             </TableRow>
           ))}
         </TableBody>
