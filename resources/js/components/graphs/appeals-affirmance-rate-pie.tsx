@@ -14,18 +14,19 @@ interface AffirmanceRatePieProps {
 }
 
 const colors = {
-  Affirmed: "rgba(73, 150, 238, 0.9)",
-  Reversed: "rgba(230, 125, 170, 0.9)",
-  Dismissed: "rgba(107, 114, 128, 0.9)", // gray-ish, add if needed
+  Affirmed: "rgba(0, 0, 128, 0.9)",       // Navy Blue
+  Reversed: "rgba(64, 224, 208, 0.9)",    // Turquoise (matched cyan)
+  Dismissed: "rgba(100, 149, 237, 0.9)",  // Cornflower Blue
 };
+
 
 export function AppealsAffirmanceRatePie({ data, month }: AffirmanceRatePieProps) {
   const total = data.reduce((acc, cur) => acc + cur.total, 0);
 
   const chartData = data.map(({ outcome, total }) => ({
-    name: outcome, // Just "Affirmed" or "Reversed"
+    name: outcome,
     value: total,
-    fill: colors[outcome as "Affirmed" | "Reversed"],
+    fill: colors[outcome as keyof typeof colors] ?? colors.Dismissed,
   }));
 
   const chartConfig: ChartConfig = {
@@ -74,9 +75,6 @@ export function AppealsAffirmanceRatePie({ data, month }: AffirmanceRatePieProps
                         x={x}
                         y={y}
                         fill="#fff"
-                        stroke="#000"
-                        strokeWidth={2}
-                        paintOrder="stroke"
                         textAnchor="middle"
                         dominantBaseline="central"
                         fontWeight="700"

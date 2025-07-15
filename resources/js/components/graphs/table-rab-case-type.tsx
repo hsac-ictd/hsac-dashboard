@@ -16,6 +16,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
+// ... your imports and component signature unchanged
+
 export function RabCaseTypeChart({
   data,
 }: {
@@ -28,7 +30,7 @@ export function RabCaseTypeChart({
   const totalNewCasesFiled = data.reduce((acc, cur) => acc + cur.newCasesFiled, 0);
   const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0);
 
-  const orange = " rgba(44,154,147,0.9)";
+  const orange = "rgba(44,154,147,0.9)";
   const yellow = "#eecb4cff";
 
   const chartConfig = {
@@ -52,10 +54,21 @@ export function RabCaseTypeChart({
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex gap-6 text-sm font-semibold">
-          <div style={{ color: orange }}>
+          {/* Total Cases Filed */}
+          <div className="flex items-center gap-2 text-white">
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: orange }}
+            />
             Total Cases Filed: {totalNewCasesFiled}
           </div>
-          <div style={{ color: yellow }}>
+
+          {/* Total Disposed */}
+          <div className="flex items-center gap-2 text-white">
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: yellow }}
+            />
             Total Disposed: {totalDisposed}
           </div>
         </div>
@@ -66,12 +79,7 @@ export function RabCaseTypeChart({
             margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-            />
+            <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}

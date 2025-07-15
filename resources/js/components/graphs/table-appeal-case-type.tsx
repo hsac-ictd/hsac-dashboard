@@ -16,17 +16,17 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const orange = "rgba(230, 125, 170, 0.9)";
-const yellow = "rgba(73, 150, 238, 0.9)";
+const green = "rgba(0, 153, 51, 0.9)";       // #009933
+const gold = "rgba(100, 149, 237, 0.9)";     // #6495ed (corrected color)
 
 const chartConfig = {
   newCasesFiled: {
     label: "Cases Filed",
-    color: orange,
+    color: green,
   },
   disposed: {
     label: "Disposed",
-    color: yellow,
+    color: gold,
   },
 } satisfies ChartConfig
 
@@ -52,10 +52,18 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
 
       <CardContent>
         <div className="mb-4 flex gap-6 text-sm font-semibold">
-          <div style={{ color: orange }}>
+          <div className="flex items-center gap-2 text-white">
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: green }}
+            />
             Total Cases Filed: {totalNewCases}
           </div>
-          <div style={{ color: yellow }}>
+          <div className="flex items-center gap-2 text-white">
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: gold }}
+            />
             Total Disposed: {totalDisposed}
           </div>
         </div>
@@ -76,20 +84,20 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="newCasesFiled" fill={orange} radius={4}>
+            <Bar dataKey="newCasesFiled" fill={green} radius={4}>
               <LabelList
                 dataKey="newCasesFiled"
                 position="bottom"
                 offset={10}
-                style={{ fill: orange, fontWeight: 600, fontSize: 12 }}
+                style={{ fill: green, fontWeight: 600, fontSize: 12 }}
               />
             </Bar>
-            <Bar dataKey="disposed" fill={yellow} radius={4}>
+            <Bar dataKey="disposed" fill={gold} radius={4}>
               <LabelList
                 dataKey="disposed"
                 position="bottom"
                 offset={10}
-                style={{ fill: yellow, fontWeight: 600, fontSize: 12 }}
+                style={{ fill: gold, fontWeight: 600, fontSize: 12 }}
               />
             </Bar>
           </BarChart>

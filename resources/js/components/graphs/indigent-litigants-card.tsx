@@ -1,4 +1,4 @@
-import { FileChartPie } from 'lucide-react';
+import { PersonStanding } from 'lucide-react';
 import {
   Card,
   CardAction,
@@ -17,16 +17,17 @@ export function IndigentLitigantsCard({ data }: IndigentLitigantsCardProps) {
       <Card
         className="shadow-sm @container/card"
         style={{
-          background: 'linear-gradient(90deg, rgba(20,15,60,0.9) 0%, rgba(9,9,121,0.9) 35%, rgba(0,212,255,0.9) 100%)',
+          background:
+            'radial-gradient(circle, rgba(0,0,128,0.9) 0%, rgba(0,255,255,0.9) 100%)',
         }}
       >
         <CardHeader className="flex items-center gap-4">
-          <div className="flex-shrink-0 rounded-full bg-[#10002b]/60 p-4">
-            <FileChartPie className="text-cyan-400 size-10" />
+          <div className="flex-shrink-0 rounded-full bg-[#000080]/60 p-4">
+            <PersonStanding className="text-cyan-300 size-10" />
           </div>
 
           <div className="flex-1">
-            <CardDescription className="text-[#b3e6ff] font-semibold drop-shadow-md">
+            <CardDescription className="text-[#fff] font-semibold drop-shadow-md text-center">
               Number of Indigent Litigants
             </CardDescription>
             <CardTitle className="text-4xl font-bold tabular-nums text-white drop-shadow-lg text-center @[250px]/card:text-3xl">

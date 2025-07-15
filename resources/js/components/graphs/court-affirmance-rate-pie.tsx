@@ -19,10 +19,9 @@ interface CourtAffirmanceRatePieProps {
 }
 
 const colors = {
-  Affirmed: "rgba(44,154,147,0.9)",   // blue-ish
-  Reversed: "#eecb4cff",  // pink-ish
-  Dismissed: "rgba(107, 114, 128, 0.9)", // gray-ish, add if needed
-
+  Affirmed: "rgba(255, 215, 0, 0.9)",  // Gold (#ffd700)
+  Reversed: "rgba(0, 51, 102, 0.9)",   // Deep blue (#003366)
+  Dismissed: "rgba(107, 114, 128, 0.9)", // Gray-ish (unchanged)
 };
 
 export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePieProps) {
@@ -80,9 +79,6 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
                         x={x}
                         y={y}
                         fill="#fff"
-                        stroke="#000"
-                        strokeWidth={2}
-                        paintOrder="stroke"
                         textAnchor="middle"
                         dominantBaseline="central"
                         fontWeight="700"
@@ -93,6 +89,7 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
                       </text>
                     );
                   }}
+
                   labelLine={false}
                 >
                   {chartData.map((entry) => (

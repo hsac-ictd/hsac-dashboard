@@ -96,24 +96,33 @@ export default function Dashboard({
 }: DashboardProps) {
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black">
-      <Head title="Dashboard" />
-      {/* Background Particles absolutely fill the container */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <Waves
-          lineColor="#78B9B5"
-          backgroundColor="rgba(255, 255, 255, 0.2)"
-          waveSpeedX={0.02}
-          waveSpeedY={0.01}
-          waveAmpX={40}
-          waveAmpY={20}
-          friction={0.9}
-          tension={0.01}
-          maxCursorMove={120}
-          xGap={12}
-          yGap={36}
-        />
-      </div>
+   <div className="relative min-h-screen w-full overflow-hidden bg-black">
+  <Head title="Dashboard" />
+
+<img
+  src="/images/justice.jpg"
+  alt="Background"
+  className="absolute top-0 left-0 w-[100vw] h-[100vh] object-cover pointer-events-none select-none"
+  style={{
+    opacity: 0.4,
+    zIndex: 0,
+  }}
+/>
+
+<img
+  src="/images/bg.png"
+  alt="Logo"
+  className="absolute top-[45%] left-[8%] transform -translate-y-1/2 pointer-events-none select-none"
+  style={{
+    maxWidth: "650px",
+    width: "80vw",
+    opacity: 0.5,
+    zIndex: 5,
+  }}
+/>
+
+
+
       {/* Main content above particles */}
       <div
         className="relative z-10 p-4 space-y-2 bg-transparent text-white min-h-screen max-w-screen-xl mx-auto"
