@@ -123,7 +123,7 @@ export default function Dashboard({
           {/* First Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-             <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
+              <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <TResolvedCards totalRabCasesResolved={totalRabCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
@@ -135,9 +135,9 @@ export default function Dashboard({
           {/* Second Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
+             <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-           <IndigentLitigantsCard data={totalIndigentLitigants} />
+            <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <AppealsAffirmanceRatePie
               data={appealsAffirmance.data}
@@ -150,7 +150,7 @@ export default function Dashboard({
           {/* Third Column */}
           <div className="relative">
             <h2 className="text-xl font-semibold mb-1"></h2>
-            <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
+            <IndigentLitigantsCard data={totalIndigentLitigants} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <CertificateIndigentCard data={totalCertificatesSubmitted} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
