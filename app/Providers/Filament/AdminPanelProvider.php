@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\RedirectToDashboard;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -18,6 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -55,6 +57,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->maxContentWidth(MaxWidth::Full)
             ->font('TikTok Sans')
+            ->brandName('HSAC')
+            ->brandLogo(fn () => view('filament.admin.logo'))
+            ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.png'))
             ->topNavigation()
             ->sidebarWidth('sm')
@@ -66,8 +71,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                //Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
+                RedirectToDashboard::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -83,6 +89,27 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+                    ->gridColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 3
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 4,
+                    ])
+                    ->resourceCheckboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                    ]),
+                    \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
+                        ->imageProvider(MyImages::make()->directory('images/backgrounds')),
+            ])
+            ->spa()
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s');
     }

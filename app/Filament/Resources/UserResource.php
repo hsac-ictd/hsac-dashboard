@@ -40,8 +40,12 @@ class UserResource extends Resource
                     ->password()
                     ->revealable()
                     ->default('password')
-                    ->disabledOn('edit')
+                    ->hiddenOn('edit')
                     ->required(),
+                Forms\Components\CheckboxList::make('roles')
+                    ->relationship('roles', 'name')
+                    ->columns(2)
+                    ->gridDirection('row'),
             ]);
     }
 
@@ -51,9 +55,15 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->label('Name')
+                    ->weight('font-medium')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email')
+                    ->searchable(),
+                TextColumn::make('roles.name')
+                    ->label('Roles')
+                    ->badge()
+                    ->color('green')
                     ->searchable()
             ])
             ->filters([
