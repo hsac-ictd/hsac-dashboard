@@ -16,6 +16,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -54,16 +55,18 @@ class PrexcIndicatorResource extends Resource
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $get, Set $set) {
-                        if ($state) {
+                        if (!$state) {
+                            $set('indicator', null);
                             $set('target', null);
                             $set('accomplishment', null);
                             $set('percentage_of_accomplishment', null);
+                        }
+                        if ($state) {
                             static::computeAccomplishment($get, $set);
                         }
                     }),
                 TextInput::make('target')
                     ->label('Target')
-                    ->hint('In percentage')
                     ->validationAttribute('target')
                     ->numeric()
                     ->inputMode('decimal')
@@ -77,7 +80,7 @@ class PrexcIndicatorResource extends Resource
                     }),
                 TextInput::make('accomplishment')
                     ->label('Accomplishment')
-                    ->hint('Auto-compute in percentage based on the chosen year and indicator')
+                    ->hint('Auto-compute based on the chosen year and indicator')
                     ->validationAttribute('accomplishment')
                     ->numeric()
                     ->inputMode('decimal')
@@ -92,7 +95,7 @@ class PrexcIndicatorResource extends Resource
                     }),
                 TextInput::make('percentage_of_accomplishment')
                     ->label('Percentage of Accomplishment')
-                    ->hint('Auto-compute in percentage based on the target and accomplishment values')
+                    ->hint('Auto-compute based on the target and accomplishment values')
                     ->validationAttribute('accomplishment')
                     ->numeric()
                     ->inputMode('decimal')
@@ -126,6 +129,10 @@ class PrexcIndicatorResource extends Resource
                     ->searchable()
                     ->sortable(),
             ])
+            ->groups([
+                Group::make('year')
+                    ->label('Year'),
+            ])
             ->filters([
                 //
             ])
@@ -156,7 +163,7 @@ class PrexcIndicatorResource extends Resource
         ];
     }
 
-        public static function computeAccomplishment(callable $get, Set $set): void 
+    public static function computeAccomplishment(callable $get, Set $set): void 
     {
         $year = $get('year');
         $indicator = $get('indicator');
@@ -165,13 +172,19 @@ class PrexcIndicatorResource extends Resource
         //For the Percentage of total disposed over total handled indicator
         if ($indicator === \App\Enum\Indicator::PTDHC->value && $year) {
             //Get the total number of handled and disposed cases
-            $handled = MonthlyCaseWorkload::whereYear('month_year', $year)
-                            ->sum('total_handled');
             $disposed =  MonthlyCaseWorkload::whereYear('month_year', $year)
                             ->sum('total_disposed');
 
-            if ($handled && $handled > 0) {
-                $rate = round(($disposed / $handled) * 100, 2);
+            //Get the latest total_handled as of today
+            $latestHandled = MonthlyCaseWorkload::orderByDesc('month_year')
+                                ->value('total_handled');
+        
+            //Sum up total disposed and the latest handled 
+            $total = $disposed + $latestHandled;
+
+            //Formula is (total disposed/(total disposed + latest total handled))*100
+            if ($total && $total > 0) {
+                $rate = round(($disposed / $total) * 100, 2);
                 $set('accomplishment', $rate);
             } else {
                 $set('accomplishment', null);
@@ -204,12 +217,16 @@ class PrexcIndicatorResource extends Resource
             $disposed = CaseTimelinessMetric::where('case_type', $caseType)
                             ->whereYear('month_year', $year)
                             ->sum('total_disposed');
-            $ripe = CaseTimelinessMetric::where('case_type', $caseType)
-                            ->whereYear('month_year', $year)
-                            ->sum('total_ripe');
+            //Get the latest total_ripe as of today
+            $latestRipe = CaseTimelinessMetric::where('case_type', $caseType)
+                            ->orderByDesc('month_year')
+                            ->value('total_ripe');
+            //Sum up the disposed and the latestRipe
+            $total = $disposed + $latestRipe;
 
-            if ($ripe && $ripe > 0) {
-                $rate = round(($disposed / $ripe) * 100, 2);
+            //Formula is (total disposed/(total disposed + latest total ripe))*100
+            if ($total && $total > 0) {
+                $rate = round(($disposed / $total) * 100, 2);
                 $set('accomplishment', $rate);
             } else {
                 $set('accomplishment', null);

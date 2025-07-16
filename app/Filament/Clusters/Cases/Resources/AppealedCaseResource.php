@@ -15,6 +15,8 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -47,6 +49,7 @@ class AppealedCaseResource extends Resource
                 TextInput::make('total')
                     ->label('Total Cases')
                     ->validationAttribute('total cases')
+                    ->suffix('For the chosen month and year')
                     ->numeric()
                     ->minValue(0)
                     ->required(),
@@ -55,6 +58,8 @@ class AppealedCaseResource extends Resource
                     ->validationAttribute('month and year')
                     ->native(false)
                     ->displayFormat('F Y')
+                    ->maxDate(now())
+                    ->suffixIcon('heroicon-o-calendar')
                     ->hint('Choose the 1st day of the month.')
                     ->closeOnDateSelection()
                     ->required()
@@ -75,10 +80,8 @@ class AppealedCaseResource extends Resource
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Filed' => 'warning',
-                        'Resolved' => 'green',
-                    })
+                    ->icon(fn (string $state): string => \App\Enum\CaseStatus::from($state)->icon())
+                    ->color(fn (string $state): string => \App\Enum\CaseStatus::from($state)->color())
                     ->searchable(),
                 TextColumn::make('case_type')
                     ->label('Case Type')
@@ -94,9 +97,28 @@ class AppealedCaseResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
             ])
-            ->filters([
-                //
+            ->groups([
+                Group::make('status')
+                    ->label('Status'),
+                Group::make('case_type')
+                    ->label('Case Type'),
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
+            ->filters([
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(\App\Enum\CaseStatus::options()),
+                SelectFilter::make('case_type')
+                    ->label('Case Type')
+                    ->options(\App\Enum\CaseType::optionsForAppealedCases()),
+            ], layout: Tables\Enums\FiltersLayout::Modal)
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
+            ->filtersFormColumns(2)
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

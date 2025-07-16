@@ -14,6 +14,8 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -47,14 +49,17 @@ class AffirmanceRateResource extends Resource
                 TextInput::make('total')
                     ->label('Total Decisions')
                     ->validationAttribute('total decisions')
+                    ->suffix('For the chosen month and year')
                     ->numeric()
-                    ->minValue(1)
+                    ->minValue(0)
                     ->required(),
                 DatePicker::make('month_year')
                     ->label('Month & Year')
                     ->validationAttribute('month and year')
                     ->native(false)
                     ->displayFormat('F Y')
+                    ->maxDate(now())
+                    ->suffixIcon('heroicon-o-calendar')
                     ->hint('Choose the 1st day of the month.')
                     ->closeOnDateSelection()
                     ->required()
@@ -78,10 +83,8 @@ class AffirmanceRateResource extends Resource
                 TextColumn::make('outcome')
                     ->label('Outcome')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Affirmed' => 'green',
-                        'Reversed' => 'red'
-                    })
+                    ->icon(fn (string $state): string => \App\Enum\LegalOutcome::from($state)->icon())
+                    ->color(fn (string $state): string => \App\Enum\LegalOutcome::from($state)->color())
                     ->searchable(),
                 TextColumn::make('total')
                     ->label('Total Decisions')
@@ -91,9 +94,23 @@ class AffirmanceRateResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
             ])
-            ->filters([
-                //
+            ->groups([
+                Group::make('court')
+                    ->label('Court'),
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
+            ->filters([
+                SelectFilter::make('outcome')
+                    ->label('Outcome')
+                    ->options(\App\Enum\LegalOutcome::options()),
+            ], layout: Tables\Enums\FiltersLayout::Modal)
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
+            ->filtersFormColumns(1)
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

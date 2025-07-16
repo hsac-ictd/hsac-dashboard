@@ -15,6 +15,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -35,12 +36,14 @@ class MonthlyCaseWorkloadResource extends Resource
                 TextInput::make('total_disposed')
                     ->label('Total Disposed Cases')
                     ->validationAttribute('total disposed cases')
+                    ->suffix('For the chosen month and year')
                     ->numeric()
                     ->minValue(1)
                     ->required(),
                 TextInput::make('total_handled')
                     ->label('Total Handled Cases')
                     ->validationAttribute('total handled cases')
+                    ->suffix('As of today')
                     ->numeric()
                     ->minValue(1)
                     ->required(),
@@ -49,6 +52,8 @@ class MonthlyCaseWorkloadResource extends Resource
                     ->validationAttribute('month and year')
                     ->native(false)
                     ->displayFormat('F Y')
+                    ->maxDate(now())
+                    ->suffixIcon('heroicon-o-calendar')
                     ->hint('Choose the 1st day of the month.')
                     ->closeOnDateSelection()
                     ->required()
@@ -76,8 +81,13 @@ class MonthlyCaseWorkloadResource extends Resource
                     ->label('Total Handled'),
                 TextColumn::make('month_year')
                     ->label('Month & Year')
+                    ->searchable()
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
+            ])
+            ->groups([
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
             ->filters([
                 //

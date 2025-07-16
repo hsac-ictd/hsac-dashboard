@@ -21,4 +21,20 @@ enum LegalOutcome: string
             $outcome->value => $outcome->label(),
         ])->toArray();
     }
+
+    public function icon(): string
+    {
+        return match($this) {
+            self::AFFIRMED => 'heroicon-o-check-badge',
+            self::REVERSED => 'heroicon-o-arrow-uturn-left',
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::AFFIRMED => 'success',
+            self::REVERSED => 'danger',
+        };
+    }
 }

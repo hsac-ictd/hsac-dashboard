@@ -5,16 +5,20 @@ namespace App\Filament\Resources\IndigentLitigantResource\Pages;
 use App\Filament\Exports\IndigentLitigantExporter;
 use App\Filament\Imports\IndigentLitigantImporter;
 use App\Filament\Resources\IndigentLitigantResource;
+use App\Filament\Resources\IndigentLitigantResource\Widgets\Indigents;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
 use Filament\Forms\Components\Checkbox;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Auth;
 
 class ListIndigentLitigants extends ListRecords
 {
+    use ExposesTableToWidgets;
+
     protected static string $resource = IndigentLitigantResource::class;
 
     protected function getHeaderActions(): array
@@ -42,6 +46,13 @@ class ListIndigentLitigants extends ListRecords
             Actions\CreateAction::make()
                 ->label('New')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            Indigents::class,
         ];
     }
 }
