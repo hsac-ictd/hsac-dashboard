@@ -2,18 +2,25 @@
 
 namespace App\Filament\Clusters\Cases\Resources\RabCaseResource\Pages;
 
+use App\Enum\CaseType;
 use App\Filament\Clusters\Cases\Resources\RabCaseResource;
+use App\Filament\Clusters\Cases\Resources\RabCaseResource\Widgets\TotalRabCases;
 use App\Filament\Exports\RabCaseExporter;
 use App\Filament\Imports\RabCaseImporter;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class ListRabCases extends ListRecords
 {
+    use ExposesTableToWidgets;
+
     protected static string $resource = RabCaseResource::class;
 
     protected function getHeaderActions(): array
@@ -41,6 +48,22 @@ class ListRabCases extends ListRecords
             Actions\CreateAction::make()
                 ->label('New')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All'),
+            'REM' => Tab::make('REM')->modifyQueryUsing(fn (Builder $query) => $query->where('case_type', CaseType::REM->value)),
+            'HOA' => Tab::make('HOA')->modifyQueryUsing(fn (Builder $query) => $query->where('case_type', CaseType::HOA->value)),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TotalRabCases::class,
         ];
     }
 }

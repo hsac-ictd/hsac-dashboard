@@ -24,4 +24,20 @@ enum CaseStatus: string
             $caseStatus->value => $caseStatus->label(),
         ])->toArray();
     }
+
+    public function icon(): string
+    {
+        return match($this) {
+            self::Filed => 'heroicon-o-document-plus',
+            self::Resolved => 'heroicon-o-check-badge',
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::Filed => 'info',
+            self::Resolved => 'success',
+        };
+    }
 }

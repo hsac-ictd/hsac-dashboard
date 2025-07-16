@@ -3,17 +3,21 @@
 namespace App\Filament\Clusters\Prexc\Resources\MonthlyCaseWorkloadResource\Pages;
 
 use App\Filament\Clusters\Prexc\Resources\MonthlyCaseWorkloadResource;
+use App\Filament\Clusters\Prexc\Resources\MonthlyCaseWorkloadResource\Widgets\CaseWorkload;
 use App\Filament\Exports\MonthlyCaseWorkloadExporter;
 use App\Filament\Imports\MonthlyCaseWorkloadImporter;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Auth;
 
 class ListMonthlyCaseWorkloads extends ListRecords
 {
+    use ExposesTableToWidgets;
+
     protected static string $resource = MonthlyCaseWorkloadResource::class;
 
     protected function getHeaderActions(): array
@@ -41,6 +45,13 @@ class ListMonthlyCaseWorkloads extends ListRecords
             Actions\CreateAction::make()
                 ->label('New')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CaseWorkload::class,
         ];
     }
 }

@@ -16,6 +16,8 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -58,12 +60,14 @@ class CaseTimelinessMetricResource extends Resource
                 TextInput::make('total_disposed')
                     ->label('Total Disposed Cases')
                     ->validationAttribute('total disposed cases')
+                    ->hint('For the chosen month')
                     ->numeric()
                     ->minValue(1)
                     ->required(),
                 TextInput::make('total_ripe')
                     ->label('Total Ripe for Resolution Cases')
                     ->validationAttribute('total ripe for resolution cases')
+                    ->hint('As of today')
                     ->numeric()
                     ->minValue(1)
                     ->required(),
@@ -91,9 +95,23 @@ class CaseTimelinessMetricResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
             ])
-            ->filters([
-                //
+            ->groups([
+                Group::make('case_type')
+                    ->label('Case Type'),
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
+            ->filters([
+                SelectFilter::make('case_type')
+                    ->label('Case Type')
+                    ->options(\App\Enum\CaseType::optionsForTimeliness()),
+            ], layout: Tables\Enums\FiltersLayout::Modal)
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
+            ->filtersFormColumns(1)
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

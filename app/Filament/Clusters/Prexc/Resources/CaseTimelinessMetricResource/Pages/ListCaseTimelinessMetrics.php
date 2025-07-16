@@ -2,18 +2,24 @@
 
 namespace App\Filament\Clusters\Prexc\Resources\CaseTimelinessMetricResource\Pages;
 
+use App\Enum\CaseType;
 use App\Filament\Clusters\Prexc\Resources\CaseTimelinessMetricResource;
+use App\Filament\Clusters\Prexc\Resources\CaseTimelinessMetricResource\Widgets\TimelinessMetric;
 use App\Filament\Exports\CaseTimelinessMetricExporter;
 use App\Filament\Imports\CaseTimelinessMetricImporter;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
+use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class ListCaseTimelinessMetrics extends ListRecords
 {
+    use ExposesTableToWidgets;
     protected static string $resource = CaseTimelinessMetricResource::class;
 
     protected function getHeaderActions(): array
@@ -41,6 +47,23 @@ class ListCaseTimelinessMetrics extends ListRecords
             Actions\CreateAction::make()
                 ->label('New')
                 ->icon('heroicon-o-plus-circle'),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All'),
+            'REM' => Tab::make('REM')->modifyQueryUsing(fn (Builder $query) => $query->where('case_type', CaseType::REM->value)),
+            'HOA' => Tab::make('HOA')->modifyQueryUsing(fn (Builder $query) => $query->where('case_type', CaseType::HOA->value)),
+            'Appealed' => Tab::make('Appealed')->modifyQueryUsing(fn (Builder $query) => $query->where('case_type', CaseType::Appealed->value)),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TimelinessMetric::class,
         ];
     }
 }

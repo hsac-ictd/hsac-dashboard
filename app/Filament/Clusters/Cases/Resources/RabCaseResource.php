@@ -15,6 +15,8 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -87,10 +89,8 @@ class RabCaseResource extends Resource
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Filed' => 'warning',
-                        'Resolved' => 'green',
-                    })
+                    ->icon(fn (string $state): string => \App\Enum\CaseStatus::from($state)->icon())
+                    ->color(fn (string $state): string => \App\Enum\CaseStatus::from($state)->color())
                     ->searchable(),
                 TextColumn::make('case_type')
                     ->label('Case Type')
@@ -106,9 +106,33 @@ class RabCaseResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
             ])
-            ->filters([
-                //
+            ->groups([
+                Group::make('rab')
+                    ->label('RAB'),
+                Group::make('status')
+                    ->label('Status'),
+                Group::make('case_type')
+                    ->label('Case Type'),
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
+            ->filters([
+                SelectFilter::make('rab')
+                    ->label('RAB')
+                    ->options(\App\Enum\Branch::options()),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(\App\Enum\CaseStatus::options()),
+                SelectFilter::make('case_type')
+                    ->label('Case Type')
+                    ->options(\App\Enum\CaseType::optionsForRabCases()),
+            ], layout: Tables\Enums\FiltersLayout::Modal)
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
+            ->filtersFormColumns(3)
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

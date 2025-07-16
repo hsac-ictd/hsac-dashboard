@@ -14,6 +14,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -85,6 +86,12 @@ class IndigentLitigantResource extends Resource
                     ->label('Month & Year')
                     ->sortable()
                     ->formatStateUsing(fn ($state) => \Illuminate\Support\Carbon::parse($state)->format('F Y')),
+            ])
+            ->groups([
+                Group::make('rab')
+                    ->label('RAB'),
+                Group::make('month_year')
+                    ->label('Month & Year'),
             ])
             ->filters([
                 //
