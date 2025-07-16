@@ -32,11 +32,13 @@ class UserResource extends Resource
                 TextInput::make('email')
                     ->label('Email')
                     ->validationAttribute('email')
+                    ->suffixIcon('heroicon-o-at-symbol')
                     ->email()
                     ->required(),
                 TextInput::make('password')
                     ->label('Password')
                     ->validationAttribute('password')
+                    ->prefixIcon('heroicon-o-key')
                     ->password()
                     ->revealable()
                     ->default('password')

@@ -43,6 +43,8 @@ class IndigentLitigantResource extends Resource
                     ->validationAttribute('month and year')
                     ->native(false)
                     ->displayFormat('F Y')
+                    ->maxDate(now())
+                    ->suffixIcon('heroicon-o-calendar')
                     ->hint('Choose the 1st day of the month.')
                     ->closeOnDateSelection()
                     ->required()
@@ -55,12 +57,14 @@ class IndigentLitigantResource extends Resource
                 TextInput::make('total_indigents')
                     ->label('Number of Indigent Litigants')
                     ->validationAttribute('number of indigents')
+                    ->suffixIcon('heroicon-o-user-group')
                     ->numeric()
                     ->minValue(0)
                     ->required(),
                 TextInput::make('with_certificate')
                     ->label('Submitted Certificates of Indigency')
                     ->validationAttribute('submitted certificates of indigency')
+                    ->suffixIcon('heroicon-o-document-text')
                     ->numeric()
                     ->minValue(0)
                     ->required(),

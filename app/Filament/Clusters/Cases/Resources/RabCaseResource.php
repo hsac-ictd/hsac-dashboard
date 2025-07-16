@@ -55,6 +55,7 @@ class RabCaseResource extends Resource
                 TextInput::make('total')
                     ->label('Total Cases')
                     ->validationAttribute('total cases')
+                    ->suffix('For the chosen month and year')
                     ->numeric()
                     ->minValue(0)
                     ->required(),
@@ -63,6 +64,8 @@ class RabCaseResource extends Resource
                     ->validationAttribute('month and year')
                     ->native(false)
                     ->displayFormat('F Y')
+                    ->maxDate(now())
+                    ->suffixIcon('heroicon-o-calendar')
                     ->hint('Choose the 1st day of the month.')
                     ->closeOnDateSelection()
                     ->required()

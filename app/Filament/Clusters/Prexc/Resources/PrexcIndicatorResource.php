@@ -67,7 +67,6 @@ class PrexcIndicatorResource extends Resource
                     }),
                 TextInput::make('target')
                     ->label('Target')
-                    ->hint('In percentage')
                     ->validationAttribute('target')
                     ->numeric()
                     ->inputMode('decimal')
@@ -81,7 +80,7 @@ class PrexcIndicatorResource extends Resource
                     }),
                 TextInput::make('accomplishment')
                     ->label('Accomplishment')
-                    ->hint('Auto-compute in percentage based on the chosen year and indicator')
+                    ->hint('Auto-compute based on the chosen year and indicator')
                     ->validationAttribute('accomplishment')
                     ->numeric()
                     ->inputMode('decimal')
@@ -96,7 +95,7 @@ class PrexcIndicatorResource extends Resource
                     }),
                 TextInput::make('percentage_of_accomplishment')
                     ->label('Percentage of Accomplishment')
-                    ->hint('Auto-compute in percentage based on the target and accomplishment values')
+                    ->hint('Auto-compute based on the target and accomplishment values')
                     ->validationAttribute('accomplishment')
                     ->numeric()
                     ->inputMode('decimal')
