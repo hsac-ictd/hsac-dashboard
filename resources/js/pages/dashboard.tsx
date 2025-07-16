@@ -19,6 +19,7 @@ import { NAppealCasesDisposedYearly } from "@/components/graphs/cases-appeal-dis
 import PrexcTargetsTable from "@/components/graphs/prexc-table";
 
 import Waves from "@/components/background/Particles";
+import DashboardFooter from "@/components/background/DashboardFooter";
 
 interface DashboardProps {
   prexcIndicators: Array<{
@@ -100,35 +101,19 @@ export default function Dashboard({
   <Head title="Dashboard" />
 
 <img
-  src="/images/justice.jpg"
-  alt="Background"
-  className="absolute top-0 left-0 w-[100vw] h-[100vh] object-cover pointer-events-none select-none"
-  style={{
-    opacity: 0.4,
-    zIndex: 0,
-  }}
-/>
-
-<img
   src="/images/bg.png"
-  alt="Logo"
-  className="absolute top-[45%] left-[8%] transform -translate-y-1/2 pointer-events-none select-none"
-  style={{
-    maxWidth: "650px",
-    width: "80vw",
-    opacity: 0.5,
-    zIndex: 5,
-  }}
+  alt="Background"
+  className="fixed inset-0 w-full h-full object-cover pointer-events-none select-none"
+  style={{ opacity: 0.9, zIndex: 0 }}
 />
-
 
 
       {/* Main content above particles */}
-      <div
-        className="relative z-10 p-4 space-y-2 bg-transparent text-white min-h-screen max-w-screen-xl mx-auto"
-        style={{ maxWidth: "1920px", minHeight: "1080px" }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:auto-rows-min relative">
+ <div
+  className="relative z-10 p-6 space-y-4 bg-transparent text-white min-h-screen max-w-[3840px] mx-auto"
+  style={{ minHeight: "100vh" }} // reduced from 2160px to full viewport height
+>
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-min relative">
           {/* First Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
@@ -191,8 +176,12 @@ export default function Dashboard({
             <h2 className="text-xl font-semibold mb-2"></h2>
             <NAppealCasesDisposedYearly data={yearlyAppealDisposedCases} />
           </div>
-        </div>
+
+          <div className="col-span-1 md:col-span-2 lg:col-span-4">
+            <DashboardFooter />
+          </div>
       </div>
+    </div>
     </div>
   );
 }

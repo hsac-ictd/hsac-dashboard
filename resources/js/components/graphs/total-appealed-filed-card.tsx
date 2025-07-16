@@ -3,10 +3,9 @@ import {
   Card,
   CardAction,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 interface TAppealedCasesFiledCardProps {
   data: number;
@@ -14,24 +13,24 @@ interface TAppealedCasesFiledCardProps {
 
 export function TAppealedCasesFiledCard({ data }: TAppealedCasesFiledCardProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div className="grid grid-cols-1 gap-2 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card
-        className="border border-[#rgba(102, 204, 153, 0.9)] shadow-sm @container/card"
+        className="border border-[#66cc99] shadow-sm h-[100px] flex items-center justify-center @container/card"
         style={{
           background:
             'radial-gradient(circle, rgba(0, 153, 51, 0.9) 0%, rgba(102, 204, 153, 0.9) 100%)',
         }}
       >
-        <CardHeader className="flex items-center gap-4">
-          <div className="flex-shrink-0 rounded-full bg-[#009933]/80 p-4 flex items-center justify-center">
-            <Scale className="text-white w-10 h-10" />
+        <CardHeader className="flex items-center gap-2 p-2 w-full">
+          <div className="flex-shrink-0 rounded-full bg-[#009933]/80 p-2 flex items-center justify-center">
+            <Scale className="text-white w-8 h-8" />
           </div>
 
-          <div className="flex-1">
-            <CardDescription className="text-white font-semibold drop-shadow-md text-center">
+          <div className="flex-1 space-y-1">
+            <CardDescription className="text-white font-semibold text-center text-[10px] drop-shadow-md">
               Total Appealed Cases Filed
             </CardDescription>
-            <CardTitle className="text-4xl font-bold tabular-nums text-center text-white drop-shadow-lg @[250px]/card:text-3xl">
+            <CardTitle className="text-2xl font-bold tabular-nums text-center text-white drop-shadow-lg">
               {data.toLocaleString()}
             </CardTitle>
           </div>

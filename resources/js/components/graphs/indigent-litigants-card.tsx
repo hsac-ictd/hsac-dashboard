@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 interface IndigentLitigantsCardProps {
   data: number;
@@ -13,24 +13,24 @@ interface IndigentLitigantsCardProps {
 
 export function IndigentLitigantsCard({ data }: IndigentLitigantsCardProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div className="grid grid-cols-1 gap-2 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card
-        className="shadow-sm @container/card"
+        className="shadow-sm h-[100px] flex items-center justify-center @container/card"
         style={{
           background:
             'radial-gradient(circle, rgba(0,0,128,0.9) 0%, rgba(0,255,255,0.9) 100%)',
         }}
       >
-        <CardHeader className="flex items-center gap-4">
-          <div className="flex-shrink-0 rounded-full bg-[#000080]/60 p-4">
-            <PersonStanding className="text-cyan-300 size-10" />
+        <CardHeader className="flex items-center gap-2 p-2 w-full">
+          <div className="flex-shrink-0 rounded-full bg-[#000080]/60 p-2 flex items-center justify-center">
+            <PersonStanding className="text-cyan-300 w-8 h-8" />
           </div>
 
-          <div className="flex-1">
-            <CardDescription className="text-[#fff] font-semibold drop-shadow-md text-center">
+          <div className="flex-1 space-y-1">
+            <CardDescription className="text-white font-semibold drop-shadow-md text-center text-[10px]">
               Number of Indigent Litigants
             </CardDescription>
-            <CardTitle className="text-4xl font-bold tabular-nums text-white drop-shadow-lg text-center @[250px]/card:text-3xl">
+            <CardTitle className="text-2xl font-bold tabular-nums text-white drop-shadow-lg text-center">
               {data.toLocaleString()}
             </CardTitle>
           </div>
@@ -39,5 +39,5 @@ export function IndigentLitigantsCard({ data }: IndigentLitigantsCardProps) {
         </CardHeader>
       </Card>
     </div>
-  )
+  );
 }
