@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -20,12 +21,13 @@ interface NCasesDisposedYearlyProps {
   data: Array<{ year: string; disposed: number }>
 }
 
+// Define a light-to-dark palette (example: blue shades)
 const colors = [
-  "rgba(59, 130, 246, 0.4)",
+  "rgba(59, 130, 246, 0.4)", // light blue (Tailwind blue-400 @ 40% opacity)
   "rgba(59, 130, 246, 0.6)",
   "rgba(59, 130, 246, 0.75)",
   "rgba(59, 130, 246, 0.9)",
-  "rgba(59, 130, 246, 1)",
+  "rgba(59, 130, 246, 1)", // full blue (Tailwind blue-500)
 ]
 
 const chartConfig = {
@@ -36,46 +38,38 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function NCasesDisposedYearly({ data }: NCasesDisposedYearlyProps) {
+  // Calculate total disposed (optional display)
   const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0)
 
   return (
     <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
       <CardHeader>
-        <CardTitle className="text-xs md:text-sm">Yearly RAB Cases Disposed</CardTitle>
-        <CardDescription className="text-[9px] md:text-xs">By Year</CardDescription>
+        <CardTitle>Yearly RAB Cases Disposed</CardTitle>
+        <CardDescription>By Year</CardDescription>
       </CardHeader>
 
-      <CardContent
-        className="h-[90px] md:h-[110px] p-0 overflow-visible"
-      >
+      <CardContent className="h-[183px] p-0 overflow-visible">
+        {/* Optionally show total disposed here if you want */}
+        {/* <div className="mb-2 font-semibold text-sm">Total Disposed: {totalDisposed}</div> */}
+
         <ChartContainer config={chartConfig}>
           <div className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={data}
-                margin={{ top: 10, right: 5, bottom: 105, left: 5 }}
-                barCategoryGap={6}
+                margin={{ top: 20, right: 5, bottom: 55, left: 5 }} // increased top margin for label space
+                barCategoryGap={10}
               >
                 <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="year"
-                  tickLine={false}
-                  tickMargin={4}
-                  axisLine={true}
-                  tick={{ fontSize: 7 }}
-                  interval={0}
-                />
+                <XAxis dataKey="year" tickLine={false} tickMargin={8} axisLine={true} />
                 <YAxis type="number" domain={[0, 'dataMax']} hide />
                 <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Bar dataKey="disposed" radius={[4, 4, 0, 0]}>
                   {data.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                   ))}
-                  <LabelList
-                    dataKey="disposed"
-                    position="top"
-                    style={{ fill: '#fafafaff', fontWeight: 'bold', fontSize: 8 }}
-                  />
+                  {/* Add LabelList to show the numbers on top */}
+                  <LabelList dataKey="disposed" position="top" style={{ fill: '#fafafaff', fontWeight: 'bold' }} />
                 </Bar>
               </BarChart>
             </ResponsiveContainer>

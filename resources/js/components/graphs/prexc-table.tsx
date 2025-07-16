@@ -32,12 +32,19 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
     "bg-yellow-500 border-yellow-700 text-gray-900",
   ]
 
+    const currentYear = new Date().getFullYear();
+
   if (!data.length) {
     return <div className="text-gray-700 dark:text-gray-300">No data available</div>
   }
 
   return (
-    <div className="w-full opacity-90 dark:opacity-80">
+    <div className="w-full opacity-90 dark:opacity-80 space-y-4">
+      <div className="text-3xl font-bold text-white text-center flex justify-center items-center gap-3">
+        Program Expenditure Classification
+        <span className="text-3xl font-semibold text-white ">{currentYear}</span>
+      </div>
+
       <Table
         className="
           w-full
@@ -49,6 +56,7 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
           bg-white/70 dark:bg-white/10 backdrop-blur-sm
         "
       >
+
         <TableHeader className="border-b border-gray-300 dark:border-gray-600">
           <TableRow>
             <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-left">
@@ -71,10 +79,10 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
               key={id}
               className={`hover:bg-yellow-300 border-b ${rowColors[i % rowColors.length]}`}
             >
-              <TableCell className="px-2 py-3 border-r text-gray-900">{indicator}</TableCell>
-              <TableCell className="px-2 py-3 border-r text-right text-gray-900">{target}</TableCell>
-              <TableCell className="px-2 py-3 border-r text-right text-gray-900">{accomplishment}</TableCell>
-              <TableCell className="px-2 py-3 text-right text-gray-900">{percentage_of_accomplishment}%</TableCell>
+              <TableCell className="px-2 py-4 border-r text-gray-900">{indicator}</TableCell>
+              <TableCell className="px-2 py-4 border-r text-right text-gray-900">{target}</TableCell>
+              <TableCell className="px-2 py-4 border-r text-right text-gray-900">{accomplishment}</TableCell>
+              <TableCell className="px-2 py-4 text-right text-gray-900">{percentage_of_accomplishment}%</TableCell>
             </TableRow>
           ))}
         </TableBody>

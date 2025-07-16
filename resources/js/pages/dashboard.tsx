@@ -21,6 +21,8 @@ import PrexcTargetsTable from "@/components/graphs/prexc-table";
 import Waves from "@/components/background/Particles";
 import DashboardFooter from "@/components/background/DashboardFooter";
 
+import { PageContainer } from "@/components/background/PageContainer";
+
 interface DashboardProps {
   prexcIndicators: Array<{
     id: number;
@@ -109,11 +111,8 @@ export default function Dashboard({
 
 
       {/* Main content above particles */}
- <div
-  className="relative z-10 p-6 space-y-4 bg-transparent text-white min-h-screen max-w-[3840px] mx-auto"
-  style={{ minHeight: "100vh" }} // reduced from 2160px to full viewport height
->
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-min relative">
+<PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-min relative">
           {/* First Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
@@ -155,7 +154,7 @@ export default function Dashboard({
 
             {/* Prexc Targets Table */}
             <div
-              className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-80"
+              className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-100"
               style={{
                 position: "relative",
                 width: "calc(200% + 1rem)",
@@ -181,7 +180,9 @@ export default function Dashboard({
             <DashboardFooter />
           </div>
       </div>
+       </PageContainer>
     </div>
-    </div>
+ 
+    
   );
 }

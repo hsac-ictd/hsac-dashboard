@@ -1,4 +1,4 @@
-import { Pie, PieChart, Cell, ResponsiveContainer } from "recharts";
+import { Pie, PieChart, Cell } from "recharts";
 
 import {
   Card,
@@ -51,60 +51,57 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         {chartData.length > 0 ? (
-          <ChartContainer config={chartConfig} className="mx-auto h-[190px] max-w-[420px]">
-            <div className="flex items-center justify-center gap-6 h-full">
-              <div className="w-72 h-full"> {/* fixed width for pie area */}
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={chartData}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius="80%"
-                      label={({
-                        cx,
-                        cy,
-                        midAngle,
-                        innerRadius,
-                        outerRadius,
-                        percent,
-                      }) => {
-                        const RADIAN = Math.PI / 180;
-                        const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
-                        const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+          <ChartContainer config={chartConfig} className="mx-auto max-h-[400px]">
+            <div className="flex items-center justify-center gap-6">
+              <PieChart width={400} height={360}>
+                <Pie
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={140}
+                  label={({
+                    cx,
+                    cy,
+                    midAngle,
+                    innerRadius,
+                    outerRadius,
+                    percent,
+                  }) => {
+                    const RADIAN = Math.PI / 180;
+                    const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+                    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                    const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-                        return (
-                          <text
-                            x={x}
-                            y={y}
-                            fill="#fff"
-                            textAnchor="middle"
-                            dominantBaseline="central"
-                            fontWeight="700"
-                            fontSize={18}
-                            style={{ userSelect: "none" }}
-                          >
-                            {`${(percent * 100).toFixed(1)}%`}
-                          </text>
-                        );
-                      }}
-                      labelLine={false}
-                    >
-                      {chartData.map((entry) => (
-                        <Cell
-                          key={entry.name}
-                          fill={entry.fill}
-                          stroke="#fff"
-                          strokeWidth={3}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
+                    return (
+                      <text
+                        x={x}
+                        y={y}
+                        fill="#fff"
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                        fontWeight="700"
+                        fontSize={24}
+                        style={{ userSelect: "none" }}
+                      >
+                        {`${(percent * 100).toFixed(1)}%`}
+                      </text>
+                    );
+                  }}
+
+                  labelLine={false}
+                >
+                  {chartData.map((entry) => (
+                    <Cell
+                      key={entry.name}
+                      fill={entry.fill}
+                      stroke="#fff"
+                      strokeWidth={3}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
 
               <div className="flex flex-col gap-1">
                 {chartData.map(({ name, fill }) => (

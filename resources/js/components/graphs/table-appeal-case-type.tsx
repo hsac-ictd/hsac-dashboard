@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, LabelList, ResponsiveContainer } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, LabelList } from "recharts"
 
 import {
   Card,
@@ -16,8 +16,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const green = "rgba(0, 153, 51, 0.9)";
-const gold = "rgba(100, 149, 237, 0.9)";
+const green = "rgba(0, 153, 51, 0.9)"       // #009933
+const gold = "rgba(100, 149, 237, 0.9)"     // #6495ed
 
 const chartConfig = {
   newCasesFiled: {
@@ -44,60 +44,61 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-80 sm:h-[450px] md:h-[500px] lg:h-80">
+    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-100">
       <CardHeader>
-        <CardTitle className="text-base md:text-xl lg:text-2xl">APPEAL CASE TYPE</CardTitle>
-        <CardDescription className="text-xs md:text-sm">{currentYear} - Present</CardDescription>
+        <CardTitle>APPEAL CASE TYPE</CardTitle>
+        <CardDescription>{currentYear} - Present</CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-1 w-full">
-        <div className="mb-4 flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs sm:text-sm font-semibold">
+      <CardContent>
+        <div className="mb-4 flex gap-6 text-sm font-semibold">
           <div className="flex items-center gap-2 text-white">
-            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: green }} />
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: green }}
+            />
             Total Cases Filed: {totalNewCases}
           </div>
           <div className="flex items-center gap-2 text-white">
-            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: gold }} />
+            <div
+              className="w-4 h-4 rounded-sm"
+              style={{ backgroundColor: gold }}
+            />
             Total Disposed: {totalDisposed}
           </div>
         </div>
 
         <ChartContainer config={chartConfig}>
-          <div className="w-full h-full min-h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={data}
-                margin={{ top: 20, right: 20, left: 20, bottom: 50 }}
-              >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="name"
-                  tickLine={false}
-                  tickMargin={10}
-                  axisLine={false}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="dashed" />}
-                />
-                <Bar dataKey="newCasesFiled" fill={green} radius={4}>
-                  <LabelList
-                    dataKey="newCasesFiled"
-                    position="insideTop"
-                    style={{ fill: "#fff", fontWeight: 600, fontSize: 12 }}
-                  />
-                </Bar>
-                <Bar dataKey="disposed" fill={gold} radius={4}>
-                  <LabelList
-                    dataKey="disposed"
-                    position="insideTop"
-                    style={{ fill: "#fff", fontWeight: 600, fontSize: 12 }}
-                  />
-                </Bar>
-
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <BarChart
+            data={data}
+            margin={{ top: 20, right: 20, left: 20, bottom: -6 }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="dashed" />}
+            />
+            <Bar dataKey="newCasesFiled" fill={green} radius={4}>
+              <LabelList
+                dataKey="newCasesFiled"
+                position="insideTop"
+                style={{ fill: "white", fontWeight: 600, fontSize: 14 }}
+              />
+            </Bar>
+            <Bar dataKey="disposed" fill={gold} radius={4}>
+              <LabelList
+                dataKey="disposed"
+                position="insideTop"
+                style={{ fill: "white", fontWeight: 600, fontSize: 14 }}
+              />
+            </Bar>
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>

@@ -12,7 +12,7 @@ export default function DashboardFooter() {
   }, []);
 
   return (
-    <footer className="relative z-10 w-full bg-black/80 border-t border-white/20 py-4">
+    <footer className="relative z-10 w-full bg-black/20 border-t border-white/20 py-5">
       <div
         className="
           max-w-[3840px] mx-auto flex flex-wrap justify-center sm:justify-between items-center 
@@ -22,9 +22,9 @@ export default function DashboardFooter() {
       >
         {/* Logos */}
         <div className="hidden sm:flex gap-8 items-center flex-shrink-0">
-          <img src="/images/hsac.png" alt="Logo 3" className="h-12 sm:h-14 w-auto" />
-          <img src="/images/4ph.png" alt="Logo 1" className="h-12 sm:h-14 w-auto" />
-          <img src="/images/bp.png" alt="Logo 2" className="h-12 sm:h-14 w-auto" />
+          <img src="/images/hsac.png" alt="Logo 3" className="h-12 sm:h-16 w-auto" />
+          <img src="/images/4ph.png" alt="Logo 1" className="h-12 sm:h-16 w-auto" />
+          <img src="/images/bp.png" alt="Logo 2" className="h-12 sm:h-16 w-auto" />
         </div>
 
         {/* Title with overlay */}
@@ -39,9 +39,11 @@ export default function DashboardFooter() {
         </div>
 
         {/* Date/time */}
-        <div className="
-          text-xs xs:text-sm sm:text-lg font-semibold text-white flex-shrink-0 whitespace-nowrap
-        ">
+        <div
+            className="
+              text-2xl xs:text-3xl sm:text-2xl font-semibold text-white flex-shrink-0 whitespace-nowrap
+            "
+          >
           {currentTime.format("MMMM D, YYYY h:mm:ss A")}
         </div>
       </div>
