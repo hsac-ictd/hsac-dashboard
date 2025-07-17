@@ -12,6 +12,7 @@ use App\Models\AppealedCase;
 use App\Enum\Indicator;
 use App\Enum\Branch;
 use App\Enum\CaseType;
+use App\Enum\CaseStatus;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -85,21 +86,22 @@ class DashboardController extends Controller
         }
 
             // 4. RabCases logic
-            $currentYear = now()->year;
+        //    $currentYear = now()->year;
 
-            
-            $dbTotals = RabCase::select('rab', DB::raw('SUM(total) as total'))
-                ->whereYear('month_year', $currentYear)
-                ->groupBy('rab')
-                ->pluck('total', 'rab');
+        //     $dbTotals = RabCase::select('rab', DB::raw('SUM(total) as total'))
+        //     ->whereYear('month_year', $currentYear)
+        //     ->whereRaw('TRIM(LOWER(status)) = ?', [strtolower(CaseStatus::Filed->value)])
+        //     ->groupBy('rab')
+        //     ->pluck('total', 'rab');
 
-        
-            $rabCases = collect(Branch::cases())->map(function ($branch) use ($dbTotals) {
-            return [
-                'region' =>  $branch->value, 
-                'value' => (int) ($dbTotals[$branch->value] ?? 0),
-            ];
-            })->values();
+
+        //     // Map to full list of branches with counts
+        //     $rabCases = collect(Branch::cases())->map(function ($branch) use ($dbTotals) {
+        //         return [
+        //             'region' => $branch->value,
+        //             'value' => (int) ($dbTotals[$branch->value] ?? 0), // default 0 if none
+        //         ];
+        //     })->values();
 
     // 5. RabCaseType logic
    $currentYear = now()->startOfYear();
@@ -170,8 +172,10 @@ $currentYear = now()->year;
 
 $dbTotals = RabCase::select('rab', DB::raw('SUM(total) as total'))
     ->whereYear('month_year', $currentYear)
+    ->where('status', 'Filed') 
     ->groupBy('rab')
     ->pluck('total', 'rab');
+
 
 $rabCases = collect(Branch::cases())->map(function ($branch) use ($dbTotals) {
     return [
