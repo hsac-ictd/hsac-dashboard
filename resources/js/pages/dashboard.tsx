@@ -112,7 +112,8 @@ export default function Dashboard({
 
       {/* Main content above particles */}
 <PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-min relative">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-y-4 gap-x-2 md:auto-rows-min relative">
+
           {/* First Column */}
           
           <div>
@@ -177,9 +178,9 @@ export default function Dashboard({
             <NAppealCasesDisposedYearly data={yearlyAppealDisposedCases} />
           </div>
 
-          <div className="col-span-1 md:col-span-2 lg:col-span-4">
-            <DashboardFooter />
-          </div>
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 -mt-3">
+              <DashboardFooter />
+            </div>
       </div>
        </PageContainer>
     </div>

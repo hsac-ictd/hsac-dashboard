@@ -47,7 +47,7 @@ export function NAppealCasesDisposedYearly({ data = [] }: NAppealCasesDisposedYe
   return (
     <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
       <CardHeader>
-        <CardTitle>Yearly Appeal Cases Disposed</CardTitle>
+        <CardTitle>Yearly Appealed Cases Disposed</CardTitle>
         <CardDescription>By Year</CardDescription>
       </CardHeader>
 

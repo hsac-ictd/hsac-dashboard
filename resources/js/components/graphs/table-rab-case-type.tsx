@@ -60,7 +60,7 @@ export function RabCaseTypeChart({
               className="w-4 h-4 rounded-sm"
               style={{ backgroundColor: orange }}
             />
-            Total Cases Filed: {totalNewCasesFiled}
+            Total Filed: {totalNewCasesFiled}
           </div>
 
           {/* Total Disposed */}
