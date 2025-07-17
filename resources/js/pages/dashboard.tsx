@@ -106,8 +106,10 @@ export default function Dashboard({
   src="/images/bg.png"
   alt="Background"
   className="fixed inset-0 w-full h-full object-cover pointer-events-none select-none"
-  style={{ opacity: 0.9, zIndex: 0 }}
+  style={{ opacity: 1, zIndex: 0 }}
 />
+  <div className="fixed inset-0 bg-black/80 z-0" />
+  
 
 
       {/* Main content above particles */}
