@@ -15,7 +15,7 @@ interface AffirmanceRatePieProps {
 
 const colors = {
   Affirmed: "rgba(0, 51, 102, 0.9)",     // Navy Blue
-  Reversed: "rgba(111, 202, 193, 0.9)",    // Turquoise (matched cyan)
+  Reversed:  "rgba(255, 215, 0, 0.9)",  // Gold (#ffd700)
   Dismissed: "rgba(100, 149, 237, 0.9)",  // Cornflower Blue
 };
 

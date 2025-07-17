@@ -25,12 +25,13 @@ interface PrexcTargetsTableProps {
 export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
   // You can keep your row colors or generate dynamically if you want to cycle
   const rowColors = [
-    "bg-yellow-100 border-yellow-300 text-gray-900",
-    "bg-yellow-200 border-yellow-400 text-gray-900",
-    "bg-yellow-300 border-yellow-500 text-gray-900",
-    "bg-yellow-400 border-yellow-600 text-gray-900",
-    "bg-yellow-500 border-yellow-700 text-gray-900",
-  ]
+  "bg-orange-100 border-orange-300 text-gray-900",
+  "bg-orange-200 border-orange-400 text-gray-900",
+  "bg-orange-300 border-orange-500 text-gray-900",
+  "bg-orange-400 border-orange-600 text-gray-900",
+  "bg-orange-500 border-orange-700 text-gray-900",
+];
+
 
     const currentYear = new Date().getFullYear();
 
@@ -46,16 +47,17 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
       </div>
 
       <Table
-        className="
-          w-full
-          table-auto
-          border border-gray-300 dark:border-gray-600
-          rounded-lg
-          text-gray-900 dark:text-gray-100
-          text-sm
-          bg-white/70 dark:bg-white/10 backdrop-blur-sm
-        "
-      >
+  className="
+    w-full
+    table-auto
+    border border-gray-300 dark:border-gray-600
+    text-gray-900 dark:text-gray-100
+    text-sm
+    bg-white/70 dark:bg-white/10 backdrop-blur-sm
+    rounded-md
+  "
+>
+
 
         <TableHeader className="border-b border-gray-300 dark:border-gray-600">
           <TableRow>
@@ -73,19 +75,31 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
             </TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {data.map(({ id, indicator, target, accomplishment, percentage_of_accomplishment }, i) => (
-            <TableRow
-              key={id}
-              className={`hover:bg-yellow-300 border-b ${rowColors[i % rowColors.length]}`}
-            >
-              <TableCell className="px-2 py-4 border-r text-gray-900">{indicator}</TableCell>
-              <TableCell className="px-2 py-4 border-r text-right text-gray-900">{target}</TableCell>
-              <TableCell className="px-2 py-4 border-r text-right text-gray-900">{accomplishment}</TableCell>
-              <TableCell className="px-2 py-4 text-right text-gray-900">{percentage_of_accomplishment}%</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+       <TableBody>
+              {data.map(({ id, indicator, target, accomplishment, percentage_of_accomplishment }, i) => (
+                <TableRow
+                  key={id}
+                  className={`hover:bg-yellow-300 border-b ${rowColors[i % rowColors.length]}`}
+                >
+                <TableCell className="px-2 py-4 border-r text-gray-900 font-bold">{indicator || "N/A"}</TableCell>
+
+                <TableCell className="px-2 py-4 border-r text-right text-gray-900 font-bold">
+                  {target && target !== 0 ? `${target}%` : "N/A"}
+                </TableCell>
+
+                <TableCell className="px-2 py-4 border-r text-right text-gray-900 font-bold">
+                  {accomplishment && accomplishment !== 0 ? `${accomplishment}%` : "N/A"}
+                </TableCell>
+
+                <TableCell className="px-2 py-4 text-right text-gray-900 font-bold">
+                  {percentage_of_accomplishment && percentage_of_accomplishment !== 0
+                    ? `${percentage_of_accomplishment}%`
+                    : "N/A"}
+                </TableCell>
+
+                </TableRow>
+              ))}
+            </TableBody>
       </Table>
     </div>
   )

@@ -114,6 +114,7 @@ export default function Dashboard({
 <PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-min relative">
           {/* First Column */}
+          
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
               <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
