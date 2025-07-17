@@ -22,16 +22,12 @@ export default function DashboardFooter() {
       >
         {/* Logos */}
         <div className="hidden sm:flex gap-8 items-center flex-shrink-0">
-  <img src="/images/hsac.png" alt="Logo 3" className="h-16 w-auto" />
-  <img src="/images/4ph.png" alt="Logo 1" className="h-16 w-auto" />
-  <img 
-    src="/images/bp.png" 
-    alt="Logo 2" 
-    className="h-20 w-auto" 
-    style={{ filter: 'drop-shadow(0 0 2px white)' }}
-  />
-</div>
+          <img src="/images/hsac.png" alt="Logo 3" className="h-12 sm:h-16 w-auto" />
+          <img src="/images/4ph.png" alt="Logo 1" className="h-12 sm:h-16 w-auto" />
+          <img src="/images/bp.png" alt="Logo 2" className="h-12 sm:h-16 w-auto"style={{ filter: 'drop-shadow(0 0 2px white)' }}
+/>
 
+        </div>
 
         {/* Title with overlay */}
       <div className="relative flex-grow flex justify-center items-center min-h-[56px] w-full sm:w-auto">
@@ -47,7 +43,7 @@ export default function DashboardFooter() {
   
   <h1 className="
       relative text-center text-lg xs:text-xl sm:text-3xl md:text-5xl font-extrabold
-      text-yellow-300 select-none pointer-events-none px-4 sm:px-6 break-words
+      text-white select-none pointer-events-none px-4 sm:px-6 break-words
       drop-shadow-md
     ">
     CASE MONITORING DASHBOARD
@@ -55,11 +51,12 @@ export default function DashboardFooter() {
 </div>
 
         {/* Date/time */}
-       <div className="flex flex-col items-center text-white flex-shrink-0 whitespace-nowrap">
+{/* Date/time */}
+<div className="flex flex-col items-center text-white flex-shrink-0 whitespace-nowrap mt-0 -mt-2">
   <div className="text-3xl xs:text-4xl sm:text-2xl font-semibold">
     {currentTime.format("MMMM D, YYYY")}
   </div>
-  <div className="text-xl xs:text-2xl sm:text-lg font-normal mt-1">
+  <div className="text-base xs:text-lg sm:text-sm font-normal mt-1">
     {currentTime.format("h:mm:ss A")}
   </div>
 </div>
