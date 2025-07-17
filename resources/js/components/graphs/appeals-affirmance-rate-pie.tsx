@@ -41,10 +41,10 @@ export function AppealsAffirmanceRatePie({ data, month }: AffirmanceRatePieProps
 
   return (
    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>COURT OF APPEALS AFFIRMANCE - RATE</CardTitle>
-        <CardDescription>{month ?? "No data available"}</CardDescription>
-      </CardHeader>
+  <CardHeader className="items-center pb-0">
+    <CardTitle className="text-white">COURT OF APPEALS AFFIRMANCE - RATE</CardTitle>
+    <CardDescription className="text-white">{month ?? "No data available"}</CardDescription>
+  </CardHeader>
       <CardContent className="flex-1 pb-0">
         {chartData.length > 0 ? (
           <ChartContainer config={chartConfig} className="mx-auto max-h-[400px]">

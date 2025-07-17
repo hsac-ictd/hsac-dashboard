@@ -99,7 +99,7 @@ export default function Dashboard({
 }: DashboardProps) {
 
   return (
-   <div className="relative min-h-screen w-full overflow-hidden bg-black">
+    <div className="dark text-white relative min-h-screen w-full overflow-hidden bg-black">
   <Head title="Dashboard" />
 
 <img

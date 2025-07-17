@@ -47,10 +47,10 @@ export function RabCaseTypeChart({
   const currentYear = new Date().getFullYear();
 
   return (
-    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-99">
+    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-99.5 text-white">
       <CardHeader>
         <CardTitle>RAB CASE TYPE</CardTitle>
-        <CardDescription>{currentYear} - Present</CardDescription>
+        <CardDescription className="text-white">{currentYear} - Present</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="mb-4 flex gap-6 text-sm font-semibold">

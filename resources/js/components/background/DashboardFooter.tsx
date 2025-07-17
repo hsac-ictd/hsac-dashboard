@@ -54,7 +54,7 @@ export default function DashboardFooter() {
       <div className="text-3xl xs:text-4xl sm:text-2xl font-semibold">
         {currentTime.format("MMMM D, YYYY")}
       </div>
-      <div className="text-base xs:text-lg sm:text-sm font-normal mt-1">
+      <div className="text-base xs:text-lg sm:text-lg font-normal mt-1">
         {currentTime.format("h:mm:ss A")}
       </div>
     </div>

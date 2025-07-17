@@ -40,11 +40,11 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
   }
 
   return (
-    <div className="w-full opacity-90 dark:opacity-80 space-y-4">
-      <div className="text-3xl font-bold text-white text-center flex justify-center items-center gap-3">
-        Program Expenditure Classification
-        <span className="text-3xl font-semibold text-white ">{currentYear}</span>
-      </div>
+   <div className="w-full space-y-4 text-white">
+  <div className="text-3xl font-bold text-center flex justify-center items-center gap-3">
+    Program Expenditure Classification
+    <span className="text-3xl font-semibold">{currentYear}</span>
+  </div>
 
       <Table
   className="
@@ -60,21 +60,22 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
 
 
         <TableHeader className="border-b border-gray-300 dark:border-gray-600">
-          <TableRow>
-            <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-left">
-              Indicator
-            </TableHead>
-            <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-right">
-              Target
-            </TableHead>
-            <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-right">
-              Accomplishment
-            </TableHead>
-            <TableHead className="px-2 py-3 text-right">
-              Percentage of Accomplishment
-            </TableHead>
-          </TableRow>
-        </TableHeader>
+      <TableRow>
+        <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-left text-white font-bold">
+          Indicator
+        </TableHead>
+        <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-right text-white font-bold">
+          Target
+        </TableHead>
+        <TableHead className="px-2 py-3 border-r border-gray-300 dark:border-gray-600 text-right text-white font-bold">
+          Accomplishment
+        </TableHead>
+        <TableHead className="px-2 py-3 text-right text-white font-bold">
+          Percentage of Accomplishment
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+
        <TableBody>
               {data.map(({ id, indicator, target, accomplishment, percentage_of_accomplishment }, i) => (
                 <TableRow

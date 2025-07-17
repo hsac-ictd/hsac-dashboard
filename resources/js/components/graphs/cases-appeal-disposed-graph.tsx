@@ -45,11 +45,11 @@ export function NAppealCasesDisposedYearly({ data = [] }: NAppealCasesDisposedYe
   const totalDisposed = data.reduce((sum, entry) => sum + entry.disposed, 0);
 
   return (
-    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-      <CardHeader>
-        <CardTitle>Yearly Appealed Cases Disposed</CardTitle>
-        <CardDescription>By Year</CardDescription>
-      </CardHeader>
+<Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+  <CardHeader className="text-white">
+    <CardTitle className="text-white">Yearly Appealed Cases Disposed</CardTitle>
+    <CardDescription className="text-white">By Year</CardDescription>
+  </CardHeader>
 
       <CardContent className="h-[145px] p-0 overflow-visible">
         <ChartContainer config={chartConfig}>

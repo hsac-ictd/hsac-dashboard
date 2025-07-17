@@ -55,10 +55,10 @@ export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
   }
 
   return (
-    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg min-h-[315px]">
-      <CardHeader>
-        <CardTitle>RAB Cases Filed Distribution</CardTitle>
-        <CardDescription>{new Date().getFullYear()}</CardDescription>
+    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg min-h-[315px] text-white">
+  <CardHeader>
+    <CardTitle className="text-white">RAB Cases Filed Distribution</CardTitle>
+    <CardDescription className="text-white">{new Date().getFullYear()}</CardDescription>
       </CardHeader>
       <CardContent className="overflow-x-auto min-h-[240px]">
         <ChartContainer config={chartConfig}>
