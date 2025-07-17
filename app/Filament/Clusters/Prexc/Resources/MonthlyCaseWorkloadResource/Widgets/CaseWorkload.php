@@ -20,6 +20,8 @@ class CaseWorkload extends BaseWidget
     }
     protected function getStats(): array
     {
+        $rate = '';
+        
         //Get the total number of handled and disposed cases
         $disposed =  MonthlyCaseWorkload::whereYear('month_year', now()->year)
                         ->sum('total_disposed');
