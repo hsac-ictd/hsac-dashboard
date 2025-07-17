@@ -108,8 +108,8 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
-                    \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
-                        ->imageProvider(MyImages::make()->directory('images/backgrounds')),
+                \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
+                    ->imageProvider(MyImages::make()->directory('images/backgrounds')),
             ])
             ->renderHook(
                 PanelsRenderHook::FOOTER,
