@@ -59,7 +59,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->maxContentWidth(MaxWidth::Full)
             ->font('TikTok Sans')
-            ->brandName('HSAC')
+            ->brandName('CMD')
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.png'))

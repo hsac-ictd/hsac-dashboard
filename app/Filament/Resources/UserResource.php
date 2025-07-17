@@ -41,7 +41,7 @@ class UserResource extends Resource
                     ->prefixIcon('heroicon-o-key')
                     ->password()
                     ->revealable()
-                    ->default('password')
+                    ->default('Password@123')
                     ->hiddenOn('edit')
                     ->required(),
                 Forms\Components\CheckboxList::make('roles')

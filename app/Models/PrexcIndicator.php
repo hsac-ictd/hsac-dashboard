@@ -11,6 +11,7 @@ class PrexcIndicator extends Model
         'target',
         'accomplishment',
         'year',
-        'percentage_of_accomplishment'
+        'percentage_of_accomplishment',
+        'description',
     ];
 }
