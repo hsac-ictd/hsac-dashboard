@@ -44,16 +44,25 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
-  const maxValue = Math.max(...data.map((d) => d.value), 0);
-  const domainMax = maxValue > 0 ? Math.ceil(maxValue * 1.1) : 10;
+  const maxValue = Math.max(...data.map((d) => d.value), 0)
+  const domainMax = maxValue > 0 ? Math.ceil(maxValue * 1.1) : 10
+
+  if (!data.length) {
+    return (
+      <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg min-h-[750px] justify-center items-center text-white text-lg">
+        Loading chart data...
+      </Card>
+    )
+  }
 
   return (
     <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+
       <CardHeader>
         <CardTitle>Regional Distribution</CardTitle>
         <CardDescription>{new Date().getFullYear()}</CardDescription>
       </CardHeader>
-      <CardContent className="overflow-x-auto">
+      <CardContent className="overflow-x-auto min-h-[150px]">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height={600}>
             <BarChart
@@ -71,7 +80,6 @@ export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
               </defs>
 
               <CartesianGrid horizontal={false} />
-
               <YAxis type="category" dataKey="region" hide />
               <XAxis type="number" domain={[0, domainMax]} hide />
 
@@ -96,7 +104,7 @@ export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
                   position="left"
                   offset={8}
                   fill="white"
-                  fontSize={12} 
+                  fontSize={12}
                 />
 
                 <LabelList
@@ -104,10 +112,10 @@ export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
                   position="right"
                   offset={10}
                   fill="white"
-                  fontSize={12} 
+                  fontSize={12}
                   formatter={(value) => {
-                    const num = typeof value === "number" ? value : Number(value);
-                    return num > 0 ? num : "";
+                    const num = typeof value === "number" ? value : Number(value)
+                    return num > 0 ? num : ""
                   }}
                 />
               </Bar>
