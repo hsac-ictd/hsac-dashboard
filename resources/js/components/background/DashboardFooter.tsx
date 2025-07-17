@@ -39,7 +39,7 @@ export default function DashboardFooter() {
   />
   
   {/* Original background overlay for contrast */}
-  <div className="absolute inset-0 mx-auto w-full sm:w-auto bg-[#414141]/60 pointer-events-none rounded-md" />
+  <div className="absolute inset-0 mx-auto w-full sm:w-auto bg-[#444444] pointer-events-none rounded-md" />
   
   <h1 className="
       relative text-center text-lg xs:text-xl sm:text-3xl md:text-5xl font-extrabold
