@@ -111,6 +111,7 @@ class AffirmanceRateResource extends Resource
                     ->label('Filter'),
             )
             ->filtersFormColumns(1)
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

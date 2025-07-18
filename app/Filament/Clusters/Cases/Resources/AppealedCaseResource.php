@@ -119,6 +119,7 @@ class AppealedCaseResource extends Resource
                     ->label('Filter'),
             )
             ->filtersFormColumns(2)
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

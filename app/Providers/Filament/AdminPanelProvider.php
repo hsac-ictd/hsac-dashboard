@@ -121,6 +121,9 @@ class AdminPanelProvider extends PanelProvider
                     )
                     ->enableBrowserSessions(condition: true),
             ])
+            ->resources([
+                config('filament-logger.activity_resource')
+            ])
             ->renderHook(
                 PanelsRenderHook::FOOTER,
                 fn ():  View => view('filament.components.loading-indicator')

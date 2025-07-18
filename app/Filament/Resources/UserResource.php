@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -74,6 +75,10 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),
+                Impersonate::make()
+                    ->tooltip('Impersonate this user')
+                    ->size('xs')
+                    ->redirectTo(route('filament.admin.auth.login')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

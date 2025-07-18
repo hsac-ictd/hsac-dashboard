@@ -175,6 +175,7 @@ class PrexcIndicatorResource extends Resource
             ->filters([
                 //
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),
