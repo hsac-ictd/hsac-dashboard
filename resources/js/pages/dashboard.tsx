@@ -26,12 +26,14 @@ import { PageContainer } from "@/components/background/PageContainer";
 interface DashboardProps {
   prexcIndicators: Array<{
     id: number;
+    description: string;
     indicator: string;
     target: number;
     accomplishment: number;
     percentage_of_accomplishment: number;
     year: number;
-  }>;
+}>;
+
   appealsAffirmance: {
     data: Array<{
       outcome: string;

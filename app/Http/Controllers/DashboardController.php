@@ -30,6 +30,7 @@ class DashboardController extends Controller
             if ($storedData->has($indicatorValue)) {
                 $record = $storedData->get($indicatorValue);
                 return [
+                    'description' => $record->description,
                     'indicator' => $record->indicator,
                     'target' => $record->target,
                     'accomplishment' => $record->accomplishment,
@@ -39,6 +40,7 @@ class DashboardController extends Controller
                 ];
             } else {
                 return [
+                     'description' => 'No description',
                     'indicator' => $indicatorValue,
                     'target' => null,
                     'accomplishment' => null,
