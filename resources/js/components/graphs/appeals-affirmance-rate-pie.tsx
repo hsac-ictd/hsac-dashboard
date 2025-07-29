@@ -81,7 +81,7 @@ export function AppealsAffirmanceRatePie({ data, month }: AffirmanceRatePieProps
                         fontSize={24}
                         style={{ userSelect: "none" }}
                       >
-                        {`${(percent * 100).toFixed(1)}%`}
+                        {`${(percent * 100).toFixed(2)}%`}
                       </text>
                     );
                   }}
