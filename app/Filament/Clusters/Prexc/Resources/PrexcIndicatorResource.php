@@ -105,7 +105,7 @@ class PrexcIndicatorResource extends Resource
                         ->inputMode('decimal')
                         ->suffixIcon('heroicon-m-percent-badge')
                         ->required()
-                        ->readOnly()
+                        ->readOnly(fn (callable $get): bool => $get('indicator') !== \App\Enum\Indicator::CLIENT_SATISFACTION->value)
                         ->reactive()
                         ->afterStateUpdated(function ($state, callable $get, Set $set) {
                             if ($state) {
