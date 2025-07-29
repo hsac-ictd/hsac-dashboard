@@ -1,4 +1,6 @@
-import { Head } from "@inertiajs/react";
+import React, { useEffect } from "react";
+import { Head, router } from "@inertiajs/react";
+
 import { SectionCards } from "@/components/graphs/total-case-filed";
 import { TResolvedCards } from "@/components/graphs/total-case-resolved";
 import { ChartBarHorizontal } from "@/components/graphs/new-cases-filed";
@@ -18,7 +20,6 @@ import { NAppealCasesDisposedYearly } from "@/components/graphs/cases-appeal-dis
 
 import PrexcTargetsTable from "@/components/graphs/prexc-table";
 
-import Waves from "@/components/background/Particles";
 import DashboardFooter from "@/components/background/DashboardFooter";
 
 import { PageContainer } from "@/components/background/PageContainer";
@@ -32,7 +33,7 @@ interface DashboardProps {
     accomplishment: number;
     percentage_of_accomplishment: number;
     year: number;
-}>;
+  }>;
 
   appealsAffirmance: {
     data: Array<{
@@ -64,17 +65,17 @@ interface DashboardProps {
     disposed: number;
   }>;
 
-  yearlyDisposedCases: Array<{ 
-    year: string; 
+  yearlyDisposedCases: Array<{
+    year: string;
     disposed: number;
   }>;
 
-  yearlyAppealDisposedCases: Array<{ 
-    year: string; 
+  yearlyAppealDisposedCases: Array<{
+    year: string;
     disposed: number;
   }>;
 
-  totalRabCasesFiled: number; 
+  totalRabCasesFiled: number;
   totalRabCasesResolved: number;
   totalAppealCasesResolved: number;
   totalAppealCasesFiled: number;
@@ -99,30 +100,53 @@ export default function Dashboard({
   totalIndigentLitigants,
   totalCertificatesSubmitted,
 }: DashboardProps) {
+  useEffect(() => {
+    //start an interval to reload the data every 30 minutes
+    const interval = setInterval(() => {
+      router.reload({
+        only: [
+          "prexcIndicators",
+          "appealsAffirmance",
+          "courtAffirmanceData",
+          "courtAffirmanceMonth",
+          "rabCasesData",
+          "rabCaseTypeData",
+          "appealCaseTypeData",
+          "yearlyDisposedCases",
+          "yearlyAppealDisposedCases",
+          "totalRabCasesFiled",
+          "totalRabCasesResolved",
+          "totalAppealCasesResolved",
+          "totalAppealCasesFiled",
+          "totalIndigentLitigants",
+          "totalCertificatesSubmitted",
+        ],
+      });
+    }, 1800000); // every 30 mins
+
+    return () => clearInterval(interval);
+    // end of interval
+  }, []);
 
   return (
     <div className="dark text-white relative min-h-screen w-full overflow-hidden bg-black">
-  <Head title="Dashboard" />
+      <Head title="Dashboard" />
 
-<img
-  src="/images/bg.png"
-  alt="Background"
-  className="fixed inset-0 w-full h-full object-cover pointer-events-none select-none"
-  style={{ opacity: 1, zIndex: 0 }}
-/>
-  <div className="fixed inset-0 bg-black/80 z-0" />
-  
-
+      <img
+        src="/images/bg.png"
+        alt="Background"
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none select-none"
+        style={{ opacity: 1, zIndex: 0 }}
+      />
+      <div className="fixed inset-0 bg-black/80 z-0" />
 
       {/* Main content above particles */}
-<PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
+      <PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-y-4 gap-x-2 md:auto-rows-min relative">
-
           {/* First Column */}
-          
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-              <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
+            <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <TResolvedCards totalRabCasesResolved={totalRabCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
@@ -134,14 +158,11 @@ export default function Dashboard({
           {/* Second Column */}
           <div>
             <h2 className="text-xl font-semibold mb-1"></h2>
-             <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
+            <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <AppealsAffirmanceRatePie
-              data={appealsAffirmance.data}
-              month={appealsAffirmance.month}
-            />
+            <AppealsAffirmanceRatePie data={appealsAffirmance.data} month={appealsAffirmance.month} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <AppealCaseTypeChart data={appealCaseTypeData} />
           </div>
@@ -153,10 +174,7 @@ export default function Dashboard({
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
             <CertificateIndigentCard data={totalCertificatesSubmitted} />
             <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <CourtAffirmanceRatePie
-              data={courtAffirmanceData}
-              month={courtAffirmanceMonth}
-            />
+            <CourtAffirmanceRatePie data={courtAffirmanceData} month={courtAffirmanceMonth} />
 
             {/* Prexc Targets Table */}
             <div
@@ -183,12 +201,10 @@ export default function Dashboard({
           </div>
 
           <div className="col-span-1 md:col-span-2 lg:col-span-4 -mt-3">
-              <DashboardFooter />
-            </div>
-      </div>
-       </PageContainer>
+            <DashboardFooter />
+          </div>
+        </div>
+      </PageContainer>
     </div>
- 
-    
   );
 }
