@@ -32,7 +32,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->passwordReset()
             ->colors([
                 'primary' => Color::Indigo,     // Main theme accent
                 'success' => Color::Emerald,    // For success statuses

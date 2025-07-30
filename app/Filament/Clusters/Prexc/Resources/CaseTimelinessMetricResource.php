@@ -16,7 +16,6 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -103,17 +102,6 @@ class CaseTimelinessMetricResource extends Resource
                 Group::make('month_year')
                     ->label('Month & Year'),
             ])
-            ->filters([
-                SelectFilter::make('case_type')
-                    ->label('Case Type')
-                    ->options(\App\Enum\CaseType::optionsForTimeliness()),
-            ], layout: Tables\Enums\FiltersLayout::Modal)
-            ->filtersTriggerAction(
-                fn (Tables\Actions\Action $action) => $action
-                    ->button()
-                    ->label('Filter'),
-            )
-            ->filtersFormColumns(1)
             ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
