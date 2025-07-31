@@ -44,37 +44,59 @@ const chartConfig = {
 export function NAppealCasesDisposedYearly({ data = [] }: NAppealCasesDisposedYearlyProps) {
   const totalDisposed = data.reduce((sum, entry) => sum + entry.disposed, 0);
 
-  return (
-<Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-  <CardHeader className="text-white">
-    <CardTitle className="text-white">Yearly Appealed Cases Disposed</CardTitle>
-    <CardDescription className="text-white">By Year</CardDescription>
-  </CardHeader>
+ return (
+  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+    <CardHeader className="text-white">
+      <CardTitle className="text-white">Yearly Appealed Cases Disposed</CardTitle>
+      <CardDescription className="text-white">By Year</CardDescription>
+    </CardHeader>
 
-      <CardContent className="h-[145px] p-0 overflow-visible">
+    <CardContent className="h-[145px] p-0 overflow-visible">
+      {data.length === 0 ? (
+        <div className="flex items-center justify-center h-full text-white font-semibold">
+          No data available
+        </div>
+      ) : (
         <ChartContainer config={chartConfig}>
           <div className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 20, right: 5, bottom: 95, left: 5 }} barCategoryGap={10}>
+              <BarChart
+                data={data}
+                margin={{ top: 20, right: 5, bottom: 95, left: 5 }}
+                barCategoryGap={10}
+              >
                 <CartesianGrid vertical={false} />
-                <XAxis dataKey="year" tickLine={false} tickMargin={8} axisLine={true} />
+                <XAxis
+                  dataKey="year"
+                  tickLine={false}
+                  tickMargin={8}
+                  axisLine={true}
+                />
                 <YAxis type="number" domain={[0, "dataMax"]} hide />
-                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
                 <Bar dataKey="disposed" radius={[4, 4, 0, 0]}>
                   {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={colors[index % colors.length]}
+                    />
                   ))}
-                  <LabelList 
-                    dataKey="disposed" 
+                  <LabelList
+                    dataKey="disposed"
                     position="top"
-                    style={{ fill: '#fafafaff', fontWeight: 'bold' }}
+                    style={{ fill: "#fafafaff", fontWeight: "bold" }}
                   />
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ChartContainer>
-      </CardContent>
-    </Card>
-  );
+      )}
+    </CardContent>
+  </Card>
+);
+
 }
