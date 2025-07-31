@@ -45,14 +45,14 @@ export default function DashboardFooter() {
           text-white select-none pointer-events-none px-4 sm:px-6 truncate drop-shadow-md
         "
       >
-        CASE MONITORING DASHBOARD
+        CASE MONITORING DASHBOARD 
       </h1>
     </div>
 
     {/* Time */}
     <div className="flex flex-col items-center text-white flex-shrink-0 whitespace-nowrap -mt-3">
       <div className="text-xl sm:text-2xl font-semibold">
-        {currentTime.format("MMMM D, YYYY")}
+       As of {currentTime.format("MMMM D, YYYY")}
       </div>
       <div className="text-base font-normal mt-1">
         {currentTime.format("h:mm:ss A")}
