@@ -2,19 +2,24 @@
 
 namespace App\Filament\Clusters\Prexc\Resources;
 
+use App\Enum\CaseStatus;
 use App\Filament\Clusters\Prexc;
 use App\Filament\Clusters\Prexc\Resources\PrexcIndicatorResource\Pages;
 use App\Filament\Clusters\Prexc\Resources\PrexcIndicatorResource\RelationManagers;
+use App\Models\AppealedCase;
 use App\Models\CaseTimelinessMetric;
 use App\Models\MonthlyCaseWorkload;
 use App\Models\PrexcIndicator;
+use App\Models\RabCase;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -41,67 +46,87 @@ class PrexcIndicatorResource extends Resource
                     ->options(\App\Enum\Indicator::options())
                     ->required()
                     ->reactive()
-                    ->afterStateUpdated(function (Set $set) {
+                    ->afterStateUpdated(function ($state, callable $get, Set $set) {
                         $set('year', null);
                         $set('target', null);
                         $set('accomplishment', null);
                         $set('percentage_of_accomplishment', null);
-                    }),
-                Select::make('year')
-                    ->label('Year')
-                    ->validationAttribute('year')
-                    ->native(false)
-                    ->options(fn () => collect(range(now()->year, 2019))->mapWithKeys(fn ($y) => [$y => $y]))        
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $get, Set $set) {
+
                         if (!$state) {
-                            $set('indicator', null);
-                            $set('target', null);
-                            $set('accomplishment', null);
-                            $set('percentage_of_accomplishment', null);
+                            return;
                         }
-                        if ($state) {
-                            static::computeAccomplishment($get, $set);
-                        }
-                    }),
-                TextInput::make('target')
-                    ->label('Target')
-                    ->validationAttribute('target')
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->suffixIcon('heroicon-m-percent-badge')
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $get, Set $set) {
-                        if ($state) {
-                            static::computePercentageOfAccomplishment($get, $set);
+
+                        $indicator = \App\Enum\Indicator::tryFrom($state);
+
+                        if ($indicator) {
+                            $set('description', $indicator->description());
                         }
                     }),
-                TextInput::make('accomplishment')
-                    ->label('Accomplishment')
-                    ->hint('Auto-compute based on the chosen year and indicator')
-                    ->validationAttribute('accomplishment')
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->suffixIcon('heroicon-m-percent-badge')
+                Textarea::make('description')
+                    ->label('Description')
+                    ->validationAttribute('description')
                     ->required()
                     ->readOnly()
-                    ->reactive()
-                    ->afterStateUpdated(function ($state, callable $get, Set $set) {
-                        if ($state) {
-                            static::computePercentageOfAccomplishment($get, $set);
-                        }
-                    }),
-                TextInput::make('percentage_of_accomplishment')
-                    ->label('Percentage of Accomplishment')
-                    ->hint('Auto-compute based on the target and accomplishment values')
-                    ->validationAttribute('accomplishment')
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->suffixIcon('heroicon-m-percent-badge')
-                    ->required()
-                    ->readOnly(),
+                    ->autosize(),
+                Forms\Components\Group::make([
+                    Select::make('year')
+                        ->label('Year')
+                        ->validationAttribute('year')
+                        ->native(false)
+                        ->options(fn () => collect(range(now()->year, 2019))->mapWithKeys(fn ($y) => [$y => $y]))        
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $get, Set $set) {
+                            if (!$state) {
+                                $set('indicator', null);
+                                $set('target', null);
+                                $set('accomplishment', null);
+                                $set('percentage_of_accomplishment', null);
+                            }
+                            if ($state) {
+                                static::computeAccomplishment($get, $set);
+                            }
+                        }),
+                    TextInput::make('target')
+                        ->label('Target')
+                        ->validationAttribute('target')
+                        ->numeric()
+                        ->inputMode('decimal')
+                        ->suffixIcon('heroicon-m-percent-badge')
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $get, Set $set) {
+                            if ($state) {
+                                static::computePercentageOfAccomplishment($get, $set);
+                            }
+                        }),
+                    TextInput::make('accomplishment')
+                        ->label('Accomplishment')
+                        ->hintIcon('heroicon-o-question-mark-circle', 'Auto-compute based on the chosen year and indicator')
+                        ->validationAttribute('accomplishment')
+                        ->numeric()
+                        ->inputMode('decimal')
+                        ->suffixIcon('heroicon-m-percent-badge')
+                        ->required()
+                        ->readOnly()
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $get, Set $set) {
+                            if ($state) {
+                                static::computePercentageOfAccomplishment($get, $set);
+                            }
+                        }),
+                    TextInput::make('percentage_of_accomplishment')
+                        ->label('Percentage of Accomplishment')
+                        ->hintIcon('heroicon-o-question-mark-circle', 'Auto-compute based on the target and accomplishment values')
+                        ->validationAttribute('accomplishment')
+                        ->numeric()
+                        ->inputMode('decimal')
+                        ->suffixIcon('heroicon-m-percent-badge')
+                        ->required()
+                        ->readOnly(),
+                ])
+                ->columns(4)
+                ->columnSpanFull(),
             ]);
     }
 
@@ -114,7 +139,9 @@ class PrexcIndicatorResource extends Resource
                     ->label('Indicator')
                     ->badge()
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->description(fn (PrexcIndicator $record): string => $record->description)
+                    ->wrap(),
                 TextColumn::make('target')
                     ->label('Target')
                     ->suffix('%'),
@@ -122,7 +149,22 @@ class PrexcIndicatorResource extends Resource
                     ->label('Accomplishment')
                     ->suffix('%'),
                 TextColumn::make('percentage_of_accomplishment')
-                    ->label('Percentage of Accomplishment')
+                    ->label('% of Accomplishment')
+                    ->weight(\Filament\Support\Enums\FontWeight::SemiBold)
+                    ->color(function (PrexcIndicator $record) {
+                        if (is_null($record->accomplishment) || is_null($record->target)) {
+                            return 'default';
+                        }
+
+                        return $record->accomplishment >= $record->target ? 'green' : 'red';
+                    })
+                    ->prefix(function (PrexcIndicator $record) {
+                        if (is_null($record->accomplishment) || is_null($record->target)) {
+                            return null;
+                        }
+
+                        return $record->accomplishment >= $record->target ? '👍🏼 ' : '👎🏼 ';
+                    })
                     ->suffix('%'),
                 TextColumn::make('year')
                     ->label('Year')
@@ -136,6 +178,7 @@ class PrexcIndicatorResource extends Resource
             ->filters([
                 //
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),
@@ -190,6 +233,22 @@ class PrexcIndicatorResource extends Resource
                 $set('accomplishment', null);
             }
         } 
+        //For the Client Satisfaction indicator
+        else if ($indicator === \App\Enum\Indicator::CLIENT_SATISFACTION->value) {
+            $totalResolvedRAB = RabCase::where('status', CaseStatus::Resolved->value)->whereYear('month_year', now()->year)->sum('total');
+
+            $totalFiledAppealed = AppealedCase::where('status', CaseStatus::Filed->value)->whereYear('month_year', now()->year)->sum('total');
+
+            $clientSatisfactionRate = null;
+
+            if ($totalResolvedRAB && $totalFiledAppealed && $totalResolvedRAB > 0) {
+                //“This metric assumes that cases not escalated to appeal imply satisfactory resolution at the regional level.”
+                $clientSatisfactionRate = round((($totalResolvedRAB - $totalFiledAppealed) / $totalResolvedRAB) * 100, 2);
+                $set('accomplishment', $clientSatisfactionRate);
+            } else {
+                $set('accomplishment', null);
+            }
+        }
         //For the Timeliness indicators
         else if (
             in_array(

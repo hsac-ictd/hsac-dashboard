@@ -14,6 +14,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -98,8 +99,16 @@ class IndigentLitigantResource extends Resource
                     ->label('Month & Year'),
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('rab')
+                    ->label('RAB')
+                    ->options(\App\Enum\Branch::options()),
+            ], layout: Tables\Enums\FiltersLayout::Modal)
+            ->filtersTriggerAction(
+                fn (Tables\Actions\Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

@@ -44,11 +44,11 @@ class Affirmance extends BaseWidget
         }
 
         return [
-            Stat::make('Affirmance Rate (Court of Appeals)', $affirmanceRateCA . '%')
+            Stat::make('✅ Affirmance Rate (Court of Appeals)', $affirmanceRateCA . '%')
                 ->description(now()->year . ' • Affirmed / (Affirmed + Reversed)')
                 ->descriptionColor('info')
                 ->color('info'),
-            Stat::make('Affirmance Rate (Supreme Court)', $affirmanceRateSC . '%')
+            Stat::make('✅ Affirmance Rate (Supreme Court)', $affirmanceRateSC . '%')
                 ->description(now()->year . ' • Affirmed / (Affirmed + Reversed)')
                 ->descriptionColor('info')
                 ->color('info'),

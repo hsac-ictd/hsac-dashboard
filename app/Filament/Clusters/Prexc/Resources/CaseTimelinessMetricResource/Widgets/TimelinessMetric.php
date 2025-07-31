@@ -73,15 +73,15 @@ class TimelinessMetric extends BaseWidget
         }
 
         return [
-            Stat::make('Timeliness Rate (REM)', $rateREM . '%')
+            Stat::make('⏱️ Timeliness Rate (REM)', $rateREM . '%')
                 ->description(now()->year . ' • Disposed / (Disposed + Ripe)')
                 ->descriptionColor('info')
                 ->color('info'),
-            Stat::make('Timeliness Rate (HOA)', $rateHOA . '%')
+            Stat::make('⏱️ Timeliness Rate (HOA)', $rateHOA . '%')
                 ->description(now()->year . ' • Disposed / (Disposed + Ripe)')
                 ->descriptionColor('info')
                 ->color('info'),
-            Stat::make('Timeliness Rate (Appealed)', $rateAppealed . '%')
+            Stat::make('⏱️ Timeliness Rate (Appealed)', $rateAppealed . '%')
                 ->description(now()->year . ' • Disposed / (Disposed + Ripe)')
                 ->descriptionColor('info')
                 ->color('info'),

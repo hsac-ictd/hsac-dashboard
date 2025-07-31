@@ -9,7 +9,7 @@ export function SectionCards({ totalRabCasesFiled }: SectionCardsProps) {
   return (
     <div className="grid grid-cols-1 gap-2 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card
-        className="shadow-sm h-[100px] flex items-center justify-center @container/card rounded-xl"
+         className="w-[715px] shadow-sm h-[100px] flex items-center justify-center rounded-xl mx-auto"
         style={{
           background:
             "radial-gradient(circle, rgba(245, 127, 23, 0.9) 0%, rgba(251, 192, 45, 0.9) 100%)",
@@ -24,7 +24,7 @@ export function SectionCards({ totalRabCasesFiled }: SectionCardsProps) {
             <CardDescription className="text-white font-semibold drop-shadow-md text-center text-[18px] leading-tight">
               Total Regional Cases Filed
             </CardDescription>
-            <CardTitle className="text-4xl font-bold tabular-nums text-white drop-shadow-lg text-center">
+            <CardTitle className="text-5xl font-bold tabular-nums text-white drop-shadow-lg text-center">
               {totalRabCasesFiled.toLocaleString()}
             </CardTitle>
           </div>

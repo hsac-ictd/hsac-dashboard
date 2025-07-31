@@ -39,7 +39,7 @@ class CaseWorkload extends BaseWidget
         }
 
         return [
-            Stat::make('Disposition Rate', $rate . '%')
+            Stat::make('📈 Disposition Rate', $rate . '%')
                 ->description(now()->year . ' • Disposed / (Disposed + Handled)')
                 ->descriptionColor('info')
                 ->color('info'),

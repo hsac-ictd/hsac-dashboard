@@ -30,4 +30,15 @@ enum Indicator: string
             $indicator->value => $indicator->label(),
         ])->toArray();
     }
+
+    public function description(): string
+    {
+        return match ($this) {
+            self::PTDHC => 'Percentage of decisions rendered out of the total number of cases ',
+            self::TIMELINESS_REM => 'Percentage of decisions rendered on real estate management within ninety (90) calendar days out of the total number of cases deemed submitted for decision',
+            self::TIMELINESS_HOA => 'Percentage of decisions rendered on HOA disputes within ninety (90) calendar days out of the total number of cases deemed submitted for decision',
+            self::TIMELINESS_APPEALED => 'Percentage of appealed cases resolved by the Commission within the prescribed period of 120 days from the date the appeal is deemed submitted for decision',
+            self::CLIENT_SATISFACTION => 'Percentage of stakeholders who rated the adjudication processes as satisfactory or better',
+        };
+    }
 }

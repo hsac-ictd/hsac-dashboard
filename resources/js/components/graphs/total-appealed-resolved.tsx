@@ -1,3 +1,4 @@
+// TAppealedCasesResolvedCard.tsx
 import { Gavel } from "lucide-react";
 import {
   Card,
@@ -13,9 +14,9 @@ interface TAppealedCasesResolvedCardProps {
 
 export function TAppealedCasesResolvedCard({ data }: TAppealedCasesResolvedCardProps) {
   return (
-    <div className="grid grid-cols-1 gap-2 px-0 lg:px-0 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div>
       <Card
-        className="border border-[#66cc99] shadow-sm h-[100px] flex items-center justify-center @container/card rounded-xl"
+        className="w-[715px] mx-auto border border-[#66cc99] shadow-sm h-[100px] flex items-center justify-center rounded-xl"
         style={{
           background:
             'radial-gradient(circle, rgba(0, 153, 51, 0.9) 0%, rgba(102, 204, 153, 0.9) 100%)',
@@ -30,7 +31,7 @@ export function TAppealedCasesResolvedCard({ data }: TAppealedCasesResolvedCardP
             <CardDescription className="text-white font-semibold text-center text-[18px] drop-shadow-md leading-tight">
               Total Appealed Cases Resolved
             </CardDescription>
-            <CardTitle className="text-4xl font-bold tabular-nums text-center text-white drop-shadow-lg">
+            <CardTitle className="text-5xl font-bold tabular-nums text-center text-white drop-shadow-lg">
               {data.toLocaleString()}
             </CardTitle>
           </div>

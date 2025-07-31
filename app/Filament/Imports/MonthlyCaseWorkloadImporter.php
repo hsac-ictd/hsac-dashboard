@@ -24,7 +24,7 @@ class MonthlyCaseWorkloadImporter extends Importer
                 ->label('Total Handled')
                 ->requiredMapping()
                 ->numeric()
-                ->rules(['required', 'integer', 'min:1']),
+                ->rules(['required', 'integer', 'min:0']),
             ImportColumn::make('month_year')
                 ->label('Month & Year')
                 ->helperText('Dates default to 1st. Use YYYY-MM-DD.')

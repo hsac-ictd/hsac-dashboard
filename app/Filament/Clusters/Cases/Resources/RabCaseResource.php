@@ -126,16 +126,14 @@ class RabCaseResource extends Resource
                 SelectFilter::make('status')
                     ->label('Status')
                     ->options(\App\Enum\CaseStatus::options()),
-                SelectFilter::make('case_type')
-                    ->label('Case Type')
-                    ->options(\App\Enum\CaseType::optionsForRabCases()),
             ], layout: Tables\Enums\FiltersLayout::Modal)
             ->filtersTriggerAction(
                 fn (Tables\Actions\Action $action) => $action
                     ->button()
                     ->label('Filter'),
             )
-            ->filtersFormColumns(3)
+            ->filtersFormColumns(2)
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->hiddenLabel(),

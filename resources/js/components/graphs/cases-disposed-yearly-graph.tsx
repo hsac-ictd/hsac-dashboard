@@ -42,11 +42,11 @@ export function NCasesDisposedYearly({ data }: NCasesDisposedYearlyProps) {
   const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0)
 
   return (
-    <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-      <CardHeader>
-        <CardTitle>Yearly RAB Cases Disposed</CardTitle>
-        <CardDescription>By Year</CardDescription>
-      </CardHeader>
+<Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+  <CardHeader className="text-white">
+    <CardTitle className="text-white">Yearly RAB Cases Disposed</CardTitle>
+    <CardDescription className="text-white">By Year</CardDescription>
+  </CardHeader>
 
       <CardContent className="h-[183px] p-0 overflow-visible">
         {/* Optionally show total disposed here if you want */}

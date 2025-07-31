@@ -32,7 +32,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->passwordReset()
             ->colors([
                 'primary' => Color::Indigo,     // Main theme accent
                 'success' => Color::Emerald,    // For success statuses
@@ -59,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->maxContentWidth(MaxWidth::Full)
             ->font('TikTok Sans')
-            ->brandName('HSAC')
+            ->brandName('CMD')
             ->brandLogo(fn () => view('filament.admin.logo'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.png'))
@@ -120,6 +119,9 @@ class AdminPanelProvider extends PanelProvider
                         slug: 'my-profile', // Sets the slug for the profile page (default = 'my-profile'),
                     )
                     ->enableBrowserSessions(condition: true),
+            ])
+            ->resources([
+                config('filament-logger.activity_resource')
             ])
             ->renderHook(
                 PanelsRenderHook::FOOTER,
