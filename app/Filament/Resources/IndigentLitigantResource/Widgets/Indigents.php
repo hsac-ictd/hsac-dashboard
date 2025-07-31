@@ -44,12 +44,12 @@ class Indigents extends BaseWidget
             }
 
         return [
-            Stat::make('Number of Indigent Litigants', IndigentLitigant::whereYear('month_year', now()->year)->sum('total_indigents'))
+            Stat::make('🧍🏽 Number of Indigent Litigants', IndigentLitigant::whereYear('month_year', now()->year)->sum('total_indigents'))
                 ->description('As of this year')
                 ->descriptionColor('info')
                 ->chart($chartDataIndigents)
                 ->color('info'),
-            Stat::make('Certificate of Indigency Submitted', IndigentLitigant::whereYear('month_year', now()->year)->sum('with_certificate'))
+            Stat::make('📨 Certificate of Indigency Submitted', IndigentLitigant::whereYear('month_year', now()->year)->sum('with_certificate'))
                 ->description('As of this year')
                 ->descriptionColor('success')
                 ->chart($chartDataWithCert)

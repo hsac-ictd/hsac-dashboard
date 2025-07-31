@@ -13,7 +13,7 @@
                 />
                 <div>
                     <h1 class="text-xl font-semibold">
-                        Hello, {{ auth()->user()->name }}!
+                        👋 Hello, {{ auth()->user()->name }}.
                     </h1>
                     <p class="text-md text-gray-600 dark:text-white max-w-xl mt-1">
                         This platform facilitates the collection and processing of internal data, presented on a public-facing page.

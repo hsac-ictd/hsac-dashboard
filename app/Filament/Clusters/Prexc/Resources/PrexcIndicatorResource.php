@@ -2,12 +2,15 @@
 
 namespace App\Filament\Clusters\Prexc\Resources;
 
+use App\Enum\CaseStatus;
 use App\Filament\Clusters\Prexc;
 use App\Filament\Clusters\Prexc\Resources\PrexcIndicatorResource\Pages;
 use App\Filament\Clusters\Prexc\Resources\PrexcIndicatorResource\RelationManagers;
+use App\Models\AppealedCase;
 use App\Models\CaseTimelinessMetric;
 use App\Models\MonthlyCaseWorkload;
 use App\Models\PrexcIndicator;
+use App\Models\RabCase;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -105,7 +108,7 @@ class PrexcIndicatorResource extends Resource
                         ->inputMode('decimal')
                         ->suffixIcon('heroicon-m-percent-badge')
                         ->required()
-                        ->readOnly(fn (callable $get): bool => $get('indicator') !== \App\Enum\Indicator::CLIENT_SATISFACTION->value)
+                        ->readOnly()
                         ->reactive()
                         ->afterStateUpdated(function ($state, callable $get, Set $set) {
                             if ($state) {
@@ -230,6 +233,22 @@ class PrexcIndicatorResource extends Resource
                 $set('accomplishment', null);
             }
         } 
+        //For the Client Satisfaction indicator
+        else if ($indicator === \App\Enum\Indicator::CLIENT_SATISFACTION->value) {
+            $totalResolvedRAB = RabCase::where('status', CaseStatus::Resolved->value)->whereYear('month_year', now()->year)->sum('total');
+
+            $totalFiledAppealed = AppealedCase::where('status', CaseStatus::Filed->value)->whereYear('month_year', now()->year)->sum('total');
+
+            $clientSatisfactionRate = null;
+
+            if ($totalResolvedRAB && $totalFiledAppealed && $totalResolvedRAB > 0) {
+                //“This metric assumes that cases not escalated to appeal imply satisfactory resolution at the regional level.”
+                $clientSatisfactionRate = round((($totalResolvedRAB - $totalFiledAppealed) / $totalResolvedRAB) * 100, 2);
+                $set('accomplishment', $clientSatisfactionRate);
+            } else {
+                $set('accomplishment', null);
+            }
+        }
         //For the Timeliness indicators
         else if (
             in_array(
