@@ -41,41 +41,53 @@ export function NCasesDisposedYearly({ data }: NCasesDisposedYearlyProps) {
   // Calculate total disposed (optional display)
   const totalDisposed = data.reduce((acc, cur) => acc + cur.disposed, 0)
 
-  return (
-<Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-  <CardHeader className="text-white">
-    <CardTitle className="text-white">Yearly RAB Cases Disposed</CardTitle>
-    <CardDescription className="text-white">By Year</CardDescription>
-  </CardHeader>
+return (
+  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+    <CardHeader className="text-white">
+      <CardTitle className="text-white">Yearly RAB Cases Disposed</CardTitle>
+      <CardDescription className="text-white">By Year</CardDescription>
+    </CardHeader>
 
-      <CardContent className="h-[183px] p-0 overflow-visible">
-        {/* Optionally show total disposed here if you want */}
-        {/* <div className="mb-2 font-semibold text-sm">Total Disposed: {totalDisposed}</div> */}
-
+    <CardContent className="h-[183px] p-0 overflow-visible">
+      {data.length === 0 ? (
+        <div className="flex items-center justify-center h-full text-white font-semibold">
+          No data available
+        </div>
+      ) : (
         <ChartContainer config={chartConfig}>
           <div className="h-full w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={data}
-                margin={{ top: 20, right: 5, bottom: 55, left: 5 }} // increased top margin for label space
+                margin={{ top: 20, right: 5, bottom: 55, left: 5 }}
                 barCategoryGap={10}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis dataKey="year" tickLine={false} tickMargin={8} axisLine={true} />
                 <YAxis type="number" domain={[0, 'dataMax']} hide />
-                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
                 <Bar dataKey="disposed" radius={[4, 4, 0, 0]}>
                   {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={colors[index % colors.length]}
+                    />
                   ))}
-                  {/* Add LabelList to show the numbers on top */}
-                  <LabelList dataKey="disposed" position="top" style={{ fill: '#fafafaff', fontWeight: 'bold' }} />
+                  <LabelList
+                    dataKey="disposed"
+                    position="top"
+                    style={{ fill: '#fafafaff', fontWeight: 'bold' }}
+                  />
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ChartContainer>
-      </CardContent>
-    </Card>
-  )
+      )}
+    </CardContent>
+  </Card>
+);
 }

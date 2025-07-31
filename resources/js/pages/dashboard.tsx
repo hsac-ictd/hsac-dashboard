@@ -143,50 +143,52 @@ export default function Dashboard({
       {/* Main content above particles */}
       <PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-y-4 gap-x-2 md:auto-rows-min relative">
-  {/* First Column */}
-  <div>
-   <h2 className="text-xl font-semibold mb-1"></h2>
+          
+          {/* First Column */}
+          <div>
+          <h2 className="text-xl font-semibold mb-1"></h2>
 
-{/* Stack SectionCards and TResolvedCards vertically with consistent spacing */}
-<div className="grid grid-cols-1">
-  <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
-  <div className="mt-1 mb-1" />
-  <TResolvedCards totalRabCasesResolved={totalRabCasesResolved} />
-</div>
+        {/* Stack SectionCards and TResolvedCards vertically with consistent spacing */}
+        <div className="grid grid-cols-1">
+          <SectionCards totalRabCasesFiled={totalRabCasesFiled} />
+          <div className="mt-1 mb-1" />
+          <TResolvedCards totalRabCasesResolved={totalRabCasesResolved} />
+        </div>
 
-<h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-<ChartBarHorizontal data={rabCasesData} />
-<h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-<RabCaseTypeChart data={rabCaseTypeData} />
-  </div>
+        <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+        <ChartBarHorizontal data={rabCasesData} />
+        <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+        <RabCaseTypeChart data={rabCaseTypeData} />
+          </div>
 
           {/* Second Column */}
          <div>
-  <h2 className="text-xl font-semibold mb-1"></h2>
-  
-  <div className="ml-60"> {/* Adjust 'ml-8' to the desired left margin */}
-    <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
-    <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-    <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
-  </div>
+            <h2 className="text-xl font-semibold mb-1"></h2>
+            
+            <div className="ml-60"> {/* Adjust 'ml-8' to the desired left margin */}
+              <TAppealedCasesFiledCard data={totalAppealCasesFiled} />
+              <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+              <TAppealedCasesResolvedCard data={totalAppealCasesResolved} />
+            </div>
 
-  <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-  <AppealsAffirmanceRatePie data={appealsAffirmance.data} month={appealsAffirmance.month} />
-  <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-  <AppealCaseTypeChart data={appealCaseTypeData} />
-</div>
+            <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+            <AppealsAffirmanceRatePie data={appealsAffirmance.data} month={appealsAffirmance.month} />
+            <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+            <AppealCaseTypeChart data={appealCaseTypeData} />
+          </div>
 
 
           {/* Third Column */}
           <div className="relative">
             <h2 className="text-xl font-semibold mb-1"></h2>
-            {/* <IndigentLitigantsCard data={totalIndigentLitigants} />
-            <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
-            <CertificateIndigentCard data={totalCertificatesSubmitted} />
-            <h2 className="text-xl font-semibold mt-2 mb-1"></h2> */}
-              <div className="mt-55">
-            <CourtAffirmanceRatePie data={courtAffirmanceData} month={courtAffirmanceMonth} />
-</div>
+              {/* <IndigentLitigantsCard data={totalIndigentLitigants} />
+              <h2 className="text-xl font-semibold mt-2 mb-1"></h2>
+              <CertificateIndigentCard data={totalCertificatesSubmitted} />
+              <h2 className="text-xl font-semibold mt-2 mb-1"></h2> */}
+                <div className="mt-55">
+              <CourtAffirmanceRatePie data={courtAffirmanceData} month={courtAffirmanceMonth} />
+          </div>
+
             {/* Prexc Targets Table */}
             <div
               className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-100"
