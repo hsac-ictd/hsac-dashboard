@@ -12,7 +12,7 @@ export default function DashboardHeader() {
   }, []);
 
   return (
-    <header className="relative z-10 w-full bg-black/20 border-b border-white/20 pt-6 pb-0 -mb-1">
+    <header className="relative z-10 w-full bg-black/20 border-b border-white/20 pt-6 pb-0 -mb-4">
       <div
         className="max-w-[3840px] mx-auto flex flex-nowrap justify-between items-center px-4 sm:px-8"
         style={{ minHeight: 32 }}
