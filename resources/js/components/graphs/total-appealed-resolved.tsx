@@ -29,7 +29,7 @@ export function TAppealedCasesResolvedCard({ data }: TAppealedCasesResolvedCardP
 
           <div className="flex-1 space-y-1">
             <CardDescription className="text-white font-semibold text-center text-[18px] drop-shadow-md leading-tight">
-              Total Appealed Cases Resolved
+              Total Appealed Cases Disposed 
             </CardDescription>
             <CardTitle className="text-5xl font-bold tabular-nums text-center text-white drop-shadow-lg">
               {data.toLocaleString()}

@@ -22,7 +22,7 @@ export function SectionCards({ totalRabCasesFiled }: SectionCardsProps) {
 
           <div className="flex-1 space-y-1">
             <CardDescription className="text-white font-semibold drop-shadow-md text-center text-[18px] leading-tight">
-              Total Regional Cases Filed
+              Total RAB Cases Filed
             </CardDescription>
             <CardTitle className="text-5xl font-bold tabular-nums text-white drop-shadow-lg text-center">
               {totalRabCasesFiled.toLocaleString()}

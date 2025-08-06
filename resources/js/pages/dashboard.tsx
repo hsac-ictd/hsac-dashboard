@@ -144,6 +144,9 @@ export default function Dashboard({
       <PageContainer className="relative z-10 space-y-4 bg-transparent text-white" minScale={0.63}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-y-4 gap-x-2 md:auto-rows-min relative">
           
+           <div className="col-span-1 md:col-span-2 lg:col-span-4 -mt-3">
+            <DashboardFooter />
+          </div>
           {/* First Column */}
           <div>
           <h2 className="text-xl font-semibold mb-1"></h2>
@@ -191,10 +194,10 @@ export default function Dashboard({
 
             {/* Prexc Targets Table */}
             <div
-              className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-100"
+              className="mt-2 flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl p-2 text-black h-103"
               style={{
                 position: "relative",
-                width: "calc(200% + 1rem)",
+                width: "calc(200% + 0.5rem)",
                 right: "0rem",
                 boxSizing: "border-box",
                 zIndex: 10,
@@ -213,9 +216,7 @@ export default function Dashboard({
             <NAppealCasesDisposedYearly data={yearlyAppealDisposedCases} />
           </div>
 
-          <div className="col-span-1 md:col-span-2 lg:col-span-4 -mt-3">
-            <DashboardFooter />
-          </div>
+         
         </div>
       </PageContainer>
     </div>

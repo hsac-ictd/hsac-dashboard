@@ -44,7 +44,7 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-100">
+  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-103">
     <CardHeader>
       <CardTitle className="text-white">APPEALED CASE TYPE</CardTitle>
       <CardDescription className="text-white">{currentYear} - Present</CardDescription>
@@ -77,7 +77,7 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
           <ChartContainer config={chartConfig}>
             <BarChart
               data={data}
-              margin={{ top: 20, right: 20, left: 20, bottom: -6 }}
+              margin={{ top: 20, right: 20, left: 20, bottom: -2 }}
             >
               <CartesianGrid vertical={false} />
               <XAxis

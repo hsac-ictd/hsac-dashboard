@@ -52,40 +52,44 @@ class DashboardController extends Controller
         })->values();
 
         // 2. AffirmanceRate (latest month for Court of Appeals)
-        $latestAppealsMonth = AffirmanceRate::where('court', 'Court of Appeals')
-            ->orderByDesc('month_year')
-            ->limit(1)
-            ->value('month_year');
+       $currentYear = Carbon::now()->year;
 
-        $appealsAffirmanceData = [];
-        $appealsAffirmanceMonth = null;
+        $appealsAffirmanceData = AffirmanceRate::select('outcome')
+            ->where('court', 'Court of Appeals')
+            ->whereYear('month_year', $currentYear)
+            ->groupBy('outcome')
+            ->selectRaw('SUM(total) as total')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'outcome' => $item->outcome,
+                    'total' => (int) $item->total,
+                ];
+            })
+            ->toArray();
 
-        if ($latestAppealsMonth) {
-            $appealsAffirmanceData = AffirmanceRate::where('court', 'Court of Appeals')
-                ->whereDate('month_year', $latestAppealsMonth)
-                ->get(['outcome', 'total'])
-                ->toArray();
+        $appealsAffirmanceMonth = (string) $currentYear;
 
-            $appealsAffirmanceMonth = Carbon::parse($latestAppealsMonth)->format('F Y');
-        }
 
         // 3. AffirmanceRate (latest month for Supreme Court)
-        $latestCourtMonth = AffirmanceRate::where('court', 'Supreme Court')
-            ->orderByDesc('month_year')
-            ->limit(1)
-            ->value('month_year');
+      $currentYear = Carbon::now()->year;
 
-        $courtAffirmanceData = [];
-        $courtAffirmanceMonth = null;
+$courtAffirmanceData = AffirmanceRate::select('outcome')
+    ->where('court', 'Supreme Court')
+    ->whereYear('month_year', $currentYear)
+    ->groupBy('outcome')
+    ->selectRaw('SUM(total) as total')
+    ->get()
+    ->map(function ($item) {
+        return [
+            'outcome' => $item->outcome,
+            'total' => (int) $item->total,
+        ];
+    })
+    ->toArray();
 
-        if ($latestCourtMonth) {
-            $courtAffirmanceData = AffirmanceRate::where('court', 'Supreme Court')
-                ->whereDate('month_year', $latestCourtMonth)
-                ->get(['outcome', 'total'])
-                ->toArray();
+$courtAffirmanceMonth = (string) $currentYear;
 
-            $courtAffirmanceMonth = Carbon::parse($latestCourtMonth)->format('F Y');
-        }
 
             // 4. RabCases logic
         //    $currentYear = now()->year;

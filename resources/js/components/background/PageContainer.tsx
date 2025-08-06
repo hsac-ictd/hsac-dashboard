@@ -23,14 +23,11 @@ export function PageContainer({
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
 
-      // Calculate scale to fit both width and height
       const scaleWidth = screenWidth / baseWidth;
       const scaleHeight = screenHeight / baseHeight;
 
-      // Use smaller scale to fit both dimensions but never scale above 1 (no zoom in)
       let newScale = Math.min(scaleWidth, scaleHeight, 1);
 
-      // Enforce minimum scale limit
       if (newScale < minScale) {
         newScale = minScale;
       }
@@ -59,7 +56,15 @@ export function PageContainer({
           transformOrigin: "top left",
           transform: `scale(${scale})`,
           marginLeft: 0,
-          marginRight: scale < 1 ? `${rightMarginPx * scale}px` : rightMarginPx > 0 ? `${rightMarginPx}px` : undefined,
+          marginRight:
+            scale < 1
+              ? `${rightMarginPx * scale}px`
+              : rightMarginPx > 0
+              ? `${rightMarginPx}px`
+              : undefined,
+          paddingLeft: 5,    // smaller fixed left padding
+          paddingRight: 5,   // smaller fixed right padding
+          boxSizing: "border-box",
         }}
       >
         {children}
