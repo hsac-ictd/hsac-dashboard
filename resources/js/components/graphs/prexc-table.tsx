@@ -35,7 +35,7 @@ export default function PrexcTargetsTable({ data }: PrexcTargetsTableProps) {
   }
 
   return (
-    <div className="w-full space-y-2 text-white">
+    <div className="w-full space-y-1 text-white">
       <div className="text-2xl font-bold text-center flex justify-center items-center gap-2">
         Program Expenditure Classification
         <span className="text-2xl font-semibold">{currentYear}</span>

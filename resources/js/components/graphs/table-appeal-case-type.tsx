@@ -44,7 +44,7 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-103">
+  <Card className="flex flex-col bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg h-100">
     <CardHeader>
       <CardTitle className="text-white">APPEALED CASE TYPE</CardTitle>
       <CardDescription className="text-white">{currentYear} - Present</CardDescription>
