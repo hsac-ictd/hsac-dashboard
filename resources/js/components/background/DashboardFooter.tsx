@@ -42,21 +42,22 @@ export default function DashboardHeader() {
           <img
             src="/images/bp.png"
             alt="BP Logo"
-            className="h-16 sm:h-20 w-auto"
+            className="h-16 sm:h-20 w-auto -ml-6"
             style={{ filter: "drop-shadow(0 0 2px white)" }}
           />
        
         </div>
 
         {/* Time */}
-        <div className="flex flex-col items-center text-white flex-shrink-0 whitespace-nowrap -mt-3 ml-2">
-          <div className="text-xl sm:text-2xl font-semibold">
-            As of {currentTime.format("MMMM D, YYYY")}
-          </div>
-          <div className="text-base font-normal mt-1">
-            {currentTime.format("h:mm:ss A")}
-          </div>
-        </div>
+       <div className="flex flex-col items-center text-white flex-shrink-0 whitespace-nowrap -mt-3 -mr-5 ">
+  <div className="text-xl sm:text-2xl font-semibold">
+    As of {currentTime.format("MMMM D, YYYY")}
+  </div>
+  <div className="text-base font-normal mt-1">
+    {currentTime.format("h:mm:ss A")}
+  </div>
+</div>
+
       </div>
     </header>
   );
