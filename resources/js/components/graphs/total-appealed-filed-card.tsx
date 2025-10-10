@@ -1,5 +1,5 @@
-// TAppealedCasesFiledCard.tsx
-import { Scale } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { Scale } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -13,13 +13,41 @@ interface TAppealedCasesFiledCardProps {
 }
 
 export function TAppealedCasesFiledCard({ data }: TAppealedCasesFiledCardProps) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    let startTime: number | null = null;
+    const duration = 1500; // animation duration in ms
+
+    function animate(timestamp: number) {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const progressRatio = Math.min(progress / duration, 1);
+
+      const current = Math.floor(progressRatio * data);
+      setDisplayValue(current);
+
+      if (progress < duration) {
+        requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(data);
+      }
+    }
+
+    requestAnimationFrame(animate);
+
+    return () => {
+      setDisplayValue(data);
+    };
+  }, [data]);
+
   return (
     <div>
       <Card
         className="w-[715px] mx-auto border border-[#66cc99] shadow-sm h-[100px] flex items-center justify-center rounded-xl"
         style={{
           background:
-            'radial-gradient(circle, rgba(0, 153, 51, 0.9) 0%, rgba(102, 204, 153, 0.9) 100%)',
+            "radial-gradient(circle, rgba(0, 153, 51, 0.9) 0%, rgba(102, 204, 153, 0.9) 100%)",
         }}
       >
         <CardHeader className="flex items-center gap-3 px-6 py-4 w-full">
@@ -32,7 +60,7 @@ export function TAppealedCasesFiledCard({ data }: TAppealedCasesFiledCardProps) 
               Total Appealed Cases Filed
             </CardDescription>
             <CardTitle className="text-5xl font-bold tabular-nums text-center text-white drop-shadow-lg">
-              {data.toLocaleString()}
+              {displayValue.toLocaleString()}
             </CardTitle>
           </div>
 

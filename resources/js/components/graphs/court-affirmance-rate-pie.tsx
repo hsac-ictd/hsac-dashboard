@@ -13,7 +13,7 @@ import {
 
 interface CourtAffirmanceRatePieProps {
   data: Array<{ outcome: string; total: number }>;
-  month: string | null;
+  month: string | null; // this will be the year string now
 }
 
 const colors = {
@@ -23,6 +23,8 @@ const colors = {
 };
 
 export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePieProps) {
+  const total = data.reduce((acc, cur) => acc + cur.total, 0);
+
   const chartData = data.map(({ outcome, total }) => ({
     name: outcome,
     value: total,
@@ -56,7 +58,7 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
           SUPREME COURT AFFIRMANCE - RATE
         </CardTitle>
         <CardDescription className="text-white">
-          {month ?? "No data available"}
+          Year: {month ?? "No data available"}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -71,15 +73,14 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
                 cy="50%"
                 outerRadius={140}
                 label={
-                  chartData.length > 0
+                  chartData.length > 0 && total > 0
                     ? ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                        if (percent === 0) return null; // <-- skip label if percent is zero
+
                         const RADIAN = Math.PI / 180;
-                        const radius =
-                          innerRadius + (outerRadius - innerRadius) * 0.6;
-                        const x =
-                          cx + radius * Math.cos(-midAngle * RADIAN);
-                        const y =
-                          cy + radius * Math.sin(-midAngle * RADIAN);
+                        const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
+                        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                        const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
                         return (
                           <text
@@ -98,6 +99,7 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
                       }
                     : undefined
                 }
+
                 labelLine={false}
               >
                 {(chartData.length > 0 ? chartData : fallbackData).map((entry) => (
@@ -113,6 +115,7 @@ export function CourtAffirmanceRatePie({ data, month }: CourtAffirmanceRatePiePr
 
             {chartData.length > 0 && (
               <div className="flex flex-col gap-1">
+                <div className="font-semibold text-white mb-1">Outcomes</div>
                 {chartData.map(({ name, fill }) => (
                   <div key={name} className="flex items-center gap-2">
                     <div

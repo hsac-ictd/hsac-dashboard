@@ -60,7 +60,7 @@ export function ChartBarHorizontal({ data }: ChartBarHorizontalProps) {
     <CardTitle className="text-white">RAB Cases Filed Distribution</CardTitle>
     <CardDescription className="text-white">{new Date().getFullYear()}</CardDescription>
       </CardHeader>
-      <CardContent className="overflow-x-auto min-h-[240px]">
+      <CardContent className="overflow-x-auto min-h-[235px]">
         <ChartContainer config={chartConfig}>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart

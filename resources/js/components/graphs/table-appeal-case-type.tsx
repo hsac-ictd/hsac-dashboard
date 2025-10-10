@@ -77,7 +77,7 @@ export function AppealCaseTypeChart({ data }: AppealCaseTypeChartProps) {
           <ChartContainer config={chartConfig}>
             <BarChart
               data={data}
-              margin={{ top: 20, right: 20, left: 20, bottom: -6 }}
+              margin={{ top: 20, right: 20, left: 20, bottom: -2 }}
             >
               <CartesianGrid vertical={false} />
               <XAxis

@@ -35,8 +35,8 @@ class CaseTimelinessMetricResource extends Resource
         return $form
             ->schema([
                 Select::make('case_type')
-                    ->label('Type of Case')
-                    ->validationAttribute('type of case')
+                    ->label('Case Type')
+                    ->validationAttribute('case type')
                     ->native(false)
                     ->options(\App\Enum\CaseType::optionsForTimeliness())
                     ->required(),
